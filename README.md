@@ -25,19 +25,24 @@ Landing page profissional e moderna para o restaurante Barbosa em Guaratinguetá
 
 ```
 .                                      # Raiz do projeto
-├── BarbosaRestaurante/                # Pasta do site estático
-│   ├── css/                           # Arquivos CSS
-│   │   ├── main.css                 # Estilos gerais e animações
-│   │   └── custom-properties.css    # Variáveis de cores e tipografia
-│   ├── fonts/                         # Fontes web personalizadas
-│   ├── img/                           # Imagens e ícones
-│   ├── js/                            # Arquivos JavaScript
-│   │   ├── main.js                  # Lógica principal e interatividade
-│   │   ├── form-handlers.js         # Validação de formulários e CEP
-│   │   └── utils.js                 # Utilitários gerais (cep-lookup, reveal)
-│   ├── index.html                     # Página principal (Homepage)
-│   ├── README.md                      # Documentação do projeto
-│   └── seo-audit.md                   # Relatório de auditoria SEO
+├── css/                               # Arquivos CSS
+│   └── main.css                       # Estilos gerais, animações e design system
+├── img/                               # Imagens de pratos, bebidas e logotipo
+├── js/                                # Arquivos JavaScript
+│   └── main.js                        # Lógica principal, carrinho, ViaCEP e animações
+├── tools/                             # Scripts Python auxiliares de desenvolvimento
+│   ├── apply_animations.py
+│   ├── apply_cart.py
+│   ├── apply_cart_icon.py
+│   ├── apply_quantities.py
+│   ├── apply_seo.py
+│   ├── download_drinks.py
+│   ├── update_drinks.py
+│   └── update_images.py
+├── index.html                         # Página principal (Homepage) com JSON-LD Schema
+├── robots.txt                         # Regras para buscadores
+├── sitemap.xml                        # Sitemap XML do site
+└── README.md                          # Documentação do projeto
 ```
 
 ## Como Executar
