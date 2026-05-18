@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ferramentas de desenvolvimento (não devem ir para produção)
+tools/
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
