@@ -348,6 +348,41 @@
       background-size: 40px 40px;
     }
 
+    /* Partículas de Brasa */
+    .ember {
+      position: absolute;
+      bottom: -20px;
+      width: 4px;
+      height: 4px;
+      background: #ff5722;
+      border-radius: 50%;
+      box-shadow: 0 0 10px 2px rgba(255, 87, 34, 0.8), 0 0 20px 4px rgba(255, 193, 7, 0.5);
+      opacity: 0;
+      animation: floatUp var(--duration) ease-in infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1) translateX(0);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-50vh) scale(0.8) translateX(20px);
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0) translateX(-20px);
+        opacity: 0;
+      }
+    }
+
     .hero-img {
       width: 160px;
       height: 160px;
@@ -785,6 +820,218 @@
       cursor: pointer;
       font-weight: 700;
     }
+
+    /* ── Seção de Avaliações — Design Premium ── */
+    #avaliacoes {
+      background: linear-gradient(160deg, #071623 0%, #0D2B45 55%, #0a2236 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Textura de pontos dourados no fundo */
+    #avaliacoes::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1.5px 1.5px, rgba(201,169,85,0.18) 1.5px, transparent 0);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    /* Orbs de luz ambiente */
+    #avaliacoes::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(110,181,224,0.07) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      pointer-events: none;
+    }
+
+    #avaliacoes .section-label { color: var(--gold); }
+    #avaliacoes .section-title { color: var(--white); }
+    #avaliacoes .section-sub   { color: rgba(255,255,255,0.55); }
+
+    /* Score badge no topo */
+    .reviews-score {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(201,169,85,0.1);
+      border: 1px solid rgba(201,169,85,0.3);
+      border-radius: 60px;
+      padding: 10px 24px;
+      margin-top: 24px;
+    }
+
+    .reviews-score-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .reviews-score-stars { font-size: 1rem; color: var(--gold); letter-spacing: 2px; }
+    .reviews-score-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.3; }
+
+    /* Grid de cards */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 24px;
+      margin-bottom: 52px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Card glassmorphism */
+    .review-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,169,85,0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Brilho dourado no topo do card */
+    .review-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .review-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(201,169,85,0.45);
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(201,169,85,0.15);
+    }
+
+    .review-card:hover::before { opacity: 1; }
+
+    /* Aspas decorativas gigantes */
+    .review-quote-icon {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      line-height: 0.6;
+      color: var(--gold);
+      opacity: 0.25;
+      margin-bottom: 8px;
+      display: block;
+      user-select: none;
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 0.95rem;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+
+    .review-text {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+
+    /* Rodapé do card */
+    .review-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 18px;
+    }
+
+    .review-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      flex-shrink: 0;
+      border: 2px solid rgba(201,169,85,0.4);
+    }
+
+    .review-author {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+
+    .review-location {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.38);
+      margin-top: 2px;
+    }
+
+    /* Google badge inline */
+    .review-google-badge {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    .review-google-badge svg { width: 14px; height: 14px; }
+
+    /* CTA */
+    .google-cta-container {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-google {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      border-radius: 60px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: var(--transition);
+      background: linear-gradient(135deg, rgba(201,169,85,0.15), rgba(201,169,85,0.05));
+      border: 1.5px solid rgba(201,169,85,0.5);
+      color: var(--gold);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .btn-google:hover {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(201,169,85,0.3);
+    }
+
+    .google-icon-svg { width: 18px; height: 18px; }
 
     /* Localização */
     #localizacao {
@@ -1255,6 +1502,15 @@
   </nav>
 
   <section class="hero" id="inicio">
+    <!-- Partículas de Brasa -->
+    <div class="ember" style="left: 15%; --duration: 6s; animation-delay: 0s;"></div>
+    <div class="ember" style="left: 30%; --duration: 8s; animation-delay: 2s; width: 6px; height: 6px;"></div>
+    <div class="ember" style="left: 45%; --duration: 5s; animation-delay: 1s;"></div>
+    <div class="ember" style="left: 65%; --duration: 7s; animation-delay: 3s; width: 3px; height: 3px;"></div>
+    <div class="ember" style="left: 80%; --duration: 6.5s; animation-delay: 0.5s;"></div>
+    <div class="ember" style="left: 90%; --duration: 7.5s; animation-delay: 2.5s; width: 5px; height: 5px;"></div>
+    <div class="ember" style="left: 5%; --duration: 5.5s; animation-delay: 4s; width: 4px; height: 4px;"></div>
+    
     <img src="img/logo.png" alt="Logo" class="hero-img">
     <div class="hero-badge">🔥 Autêntico Churrasco • Est. 2025</div>
     <h1>Barbosa<em>Restaurante</em></h1>
@@ -1631,6 +1887,90 @@
             <button class="qty-btn" onclick="updateDrinkQty('Coca-Cola 2L', 1, event)">+</button>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de Avaliações -->
+  <section id="avaliacoes">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Depoimentos</span>
+        <h2 class="section-title">A OPINIÃO DE QUEM PROVOU</h2>
+        <p class="section-sub">A satisfação dos nossos clientes é o que nos move todos os dias.</p>
+        <div>
+          <div class="reviews-score">
+            <span class="reviews-score-num">5.0</span>
+            <div>
+              <div class="reviews-score-stars">★★★★★</div>
+              <div class="reviews-score-label">Google Reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+
+        <div class="review-card reveal">
+          <span class="review-quote-icon">"</span>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Melhor costela desossada do Vale do Paraíba! Super macia, tempero perfeito e o marmitex vem muito bem caprichado. Entrega rápida e ainda quentinho.</p>
+          <div class="review-footer">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#f9ca24,#f0932b);">R</div>
+            <div>
+              <div class="review-author">Rodrigo Silva</div>
+              <div class="review-location">📍 Guaratinguetá</div>
+            </div>
+            <div class="review-google-badge">
+              <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.445 1.32 15.765.15 12.24.15 5.613.15.15 5.613.15 12.24s5.463 12.09 12.09 12.09c6.923 0 11.52-4.86 11.52-11.726 0-.788-.085-1.39-.188-1.83H12.24z"/></svg>
+              Google
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal">
+          <span class="review-quote-icon">"</span>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Almoço com gostinho de comida caseira de verdade. O churrasco na brasa faz toda a diferença. Recomendo muito o frango grelhado, simplesmente divino!</p>
+          <div class="review-footer">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#6ab04c,#badc58);">M</div>
+            <div>
+              <div class="review-author">Mariana Costa</div>
+              <div class="review-location">📍 Aparecida</div>
+            </div>
+            <div class="review-google-badge">
+              <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.445 1.32 15.765.15 12.24.15 5.613.15.15 5.613.15 12.24s5.463 12.09 12.09 12.09c6.923 0 11.52-4.86 11.52-11.726 0-.788-.085-1.39-.188-1.83H12.24z"/></svg>
+              Google
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal">
+          <span class="review-quote-icon">"</span>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">Pedimos o Kit Churrasco para a família no domingo e foi espetacular! Carne no ponto certo, acompanhamentos deliciosos. Todo mundo elogiou muito. Nota 1000!</p>
+          <div class="review-footer">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#e17055,#d63031);">C</div>
+            <div>
+              <div class="review-author">Carlos Eduardo</div>
+              <div class="review-location">📍 Lorena</div>
+            </div>
+            <div class="review-google-badge">
+              <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.445 1.32 15.765.15 12.24.15 5.613.15.15 5.613.15 12.24s5.463 12.09 12.09 12.09c6.923 0 11.52-4.86 11.52-11.726 0-.788-.085-1.39-.188-1.83H12.24z"/></svg>
+              Google
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="google-cta-container reveal">
+        <a href="https://share.google/1lW0aNDCLVxBe7VJJ" target="_blank" rel="noopener" class="btn-google">
+          <svg class="google-icon-svg" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.11C18.445 1.32 15.765.15 12.24.15 5.613.15.15 5.613.15 12.24s5.463 12.09 12.09 12.09c6.923 0 11.52-4.86 11.52-11.726 0-.788-.085-1.39-.188-1.83H12.24z"/>
+          </svg>
+          ⭐ Deixe sua avaliação no Google
+        </a>
       </div>
     </div>
   </section>
