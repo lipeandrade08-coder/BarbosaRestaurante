@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src https://viacep.com.br ws://localhost:* ws://127.0.0.1:*; frame-src https://maps.google.com https://www.google.com;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="img/logo.png" />
 
@@ -21,6 +23,7 @@
   <meta name="apple-mobile-web-app-title" content="Barbosa Restaurante" />
   <meta name="format-detection" content="telephone=yes" />
   <link rel="canonical" href="https://barbosarestaurante.com.br/" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <meta name="geo.region" content="BR-SP" />
   <meta name="geo.placename" content="Guaratinguetá, São Paulo, Brasil" />
@@ -33,9 +36,9 @@
   <meta property="og:description"
     content="O melhor churrasco do Vale do Paraíba! Marmitex P, M e G com costela desossada, parmegiana de carne e frango grelhado. Peça agora pelo WhatsApp." />
   <meta property="og:url" content="https://barbosarestaurante.com.br/" />
-  <meta property="og:image" content="https://barbosarestaurante.com.br/img/og_image.png" />
-  <meta property="og:image:width" content="1024" />
-  <meta property="og:image:height" content="1024" />
+  <meta property="og:image" content="https://barbosarestaurante.com.br/img/og_image_1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:phone_number" content="+5512991136258" />
@@ -81,12 +84,8 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
-
+  <link rel="preload" as="image" href="img/bg.png">
+  <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 
@@ -597,7 +596,9 @@
             <div class="loc-icon">📞</div>
             <div>
               <h4 style="color:var(--gray); font-size: 0.8rem; text-transform: uppercase;">WhatsApp</h4>
-              <p style="font-size: 1.1rem; color: var(--navy); font-weight: 600;">(12) 99113-6258</p>
+              <a href="tel:+5512991136258"
+                style="font-size: 1.1rem; color: var(--navy); font-weight: 600; text-decoration: none;">(12)
+                99113-6258</a>
             </div>
           </div>
           <div class="loc-card">
@@ -614,7 +615,7 @@
           </p>
         </div>
         <div class="map-frame reveal">
-          <iframe
+          <iframe title="Mapa da localização do Barbosa Restaurante"
             src="https://maps.google.com/maps?q=Avenida+Raul+Pompeia,402,Vila+Bela,Guaratingueta,SP&output=embed&z=16"
             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
@@ -652,7 +653,7 @@
   </div>
 
   <!-- Modal de Finalização (Checkout) -->
-  <div class="modal-overlay" id="modal-checkout">
+  <div class="modal-overlay" id="modal-checkout" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-box">
       <div class="modal-header">
         <h2 id="modal-title">Seu Pedido</h2>
@@ -694,7 +695,7 @@
           <h3 style="margin-bottom: 20px; font-family: 'Jost'; font-size: 1.2rem;">Suas Informações</h3>
           <div class="form-group">
             <label>Seu Nome *</label>
-            <input type="text" id="order-name" maxlength="80" placeholder="Como te chamamos?">
+            <input type="text" id="order-name" maxlength="80" placeholder="Como te chamamos?" autocomplete="name">
           </div>
 
           <div class="form-group">
@@ -713,7 +714,7 @@
               <label>CEP *</label>
               <div style="position: relative;">
                 <input type="text" id="order-cep" maxlength="9" placeholder="00000-000" oninput="formatCEP(this)"
-                  style="padding-right: 48px;">
+                  style="padding-right: 48px;" inputmode="numeric" autocomplete="postal-code">
                 <div id="cep-spinner"
                   style="display:none; position:absolute; right:16px; top:50%; transform:translateY(-50%);">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"
@@ -755,7 +756,8 @@
             <!-- Número (preenchido pelo cliente) -->
             <div class="form-group" id="addr-numero-group" style="display:none;">
               <label>Número *</label>
-              <input type="text" id="order-numero" maxlength="10" placeholder="Ex: 123">
+              <input type="text" id="order-numero" maxlength="10" placeholder="Ex: 123" inputmode="numeric"
+                autocomplete="address-line2">
             </div>
 
             <!-- Ponto de Referência -->

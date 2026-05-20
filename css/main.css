@@ -102,20 +102,6 @@ h4 {
   }
 }
 
-@keyframes badgePop {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.3);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes slideInRight {
   from {
     opacity: 0;
@@ -132,6 +118,11 @@ h4 {
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
 }
 
 .reveal {
@@ -158,6 +149,7 @@ nav {
   padding: 0 5%;
   height: 72px;
   background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(110, 181, 224, 0.15);
 }
@@ -533,19 +525,29 @@ section {
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: var(--shadow);
-  transition: var(--transition);
+  /* shadow pré-computada — hover só troca opacity, sem re-paint */
+  --shadow-hover: 0 20px 50px rgba(13, 43, 69, 0.12);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
   position: relative;
 }
 
 .menu-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 50px rgba(13, 43, 69, 0.12);
+  transform: translateY(-10px) scale(1.01);
 }
 
 .card-img {
   height: 220px;
   background-size: cover;
   background-position: center;
+  /* Skeleton: fundo cinza visível até a imagem carregar */
+  background-color: #e2eaf0;
+}
+
+/* Quando a imagem real está presente via style inline, remove o fundo */
+.card-img[style*="background-image: url"] {
+  background-color: transparent;
 }
 
 .card-body {
@@ -565,7 +567,10 @@ section {
   font-weight: 500;
   margin-bottom: 24px;
   line-height: 1.4;
-  height: 3.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
@@ -672,11 +677,17 @@ section {
   border: 2px solid var(--off);
   padding: 24px 16px;
   text-align: center;
-  transition: var(--transition);
+  /* Apenas transform e opacity na transição — GPU only */
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
   cursor: pointer;
 }
 
-.drink-card:hover,
+.drink-card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
 .drink-card.selected {
   border-color: var(--blue);
   box-shadow: var(--shadow);
@@ -693,6 +704,14 @@ section {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  /* Skeleton para imagens de bebida */
+  background-color: #e8eef3;
+  border-radius: 8px;
+}
+
+.drink-img[style*="background-image: url"] {
+  background-color: transparent;
+  border-radius: 0;
 }
 
 .drink-name {
@@ -1089,6 +1108,7 @@ footer strong {
   position: fixed;
   inset: 0;
   background: rgba(13, 43, 69, 0.7);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   z-index: 3000;
   display: none;
@@ -1255,6 +1275,11 @@ footer strong {
   align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+.btn-wpp:hover {
+  background: #1ebe5e;
+  transform: translateY(-2px);
 }
 
 /* Notificações (Toast) */

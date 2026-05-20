@@ -1,3 +1,6 @@
+// CONFIGURAÇÃO
+const WHATSAPP_NUMBER = "5512991136258";
+
 let cart = { items: {}, drinks: {} };
 let currentStep = 1;
 let orderType = 'Entrega';
@@ -40,6 +43,36 @@ function clearCart() {
     closeModal();
     showToast('🗑️ Carrinho esvaziado!');
   }
+}
+
+function resetCartSilent() {
+  cart = { items: {}, drinks: {} };
+  document.querySelectorAll('.drink-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.price-pill').forEach(p => {
+    p.classList.remove('has-items');
+    const v = p.querySelector('.pill-qty-val');
+    if (v) v.textContent = '0';
+  });
+  updateUI();
+  closeModal();
+
+  // Reset do formulário para evitar que dados de um cliente vazem para o próximo
+  const elName = document.getElementById('order-name');
+  if (elName) elName.value = '';
+  
+  const elObs = document.getElementById('order-obs');
+  if (elObs) elObs.value = '';
+  
+  const elCep = document.getElementById('order-cep');
+  if (elCep) elCep.value = '';
+  
+  resetCEPFields();
+
+  const btnDelivery = document.getElementById('type-delivery');
+  if (btnDelivery) setOrderType('Entrega', btnDelivery);
+
+  const btnPay = document.querySelector('.pay-btn'); // O primeiro é Dinheiro
+  if (btnPay) setPayment('Dinheiro', btnPay);
 }
 
 function switchTab(id, btn) {
@@ -116,7 +149,7 @@ function updateUI() {
   Object.entries(cart.drinks).forEach(([name, data]) => {
     total += data.price * data.qty;
     count += data.qty;
-    const card = document.querySelector(`.drink-card[data-drink="${name}"]`);
+    const card = document.querySelector(`.drink-card[data-drink="${CSS.escape(name)}"]`);
     if (card) card.querySelector('.qty-val').innerText = data.qty;
   });
 
@@ -154,7 +187,6 @@ function renderCartList() {
   Object.entries(cart.items).forEach(([key, item]) => {
     total += item.price * item.qty;
     // Usa esc() em todos os dados do usuário para prevenir XSS via innerHTML
-    const safeKey = esc(key);
     const safeName = esc(item.name);
     const safeSize = esc(item.size);
     const row = document.createElement('div');
@@ -252,6 +284,13 @@ function goToStep(s) {
   document.querySelectorAll('.step-content').forEach(c => c.classList.remove('active'));
   document.getElementById('step-' + s).classList.add('active');
 
+  const titleEl = document.getElementById('modal-title');
+  if (titleEl) {
+    if (s === 1) titleEl.innerText = "Seu Pedido";
+    else if (s === 2) titleEl.innerText = "Seus Dados";
+    else if (s === 3) titleEl.innerText = "Confirmar Pedido";
+  }
+
   document.querySelectorAll('.step-dot').forEach((d, i) => {
     d.classList.toggle('active', i < s);
   });
@@ -333,6 +372,13 @@ function renderSummary() {
 }
 
 function finishOrder() {
+  const btnFinish = document.getElementById('btn-finish');
+  if (btnFinish) {
+    if (btnFinish.disabled) return;
+    btnFinish.disabled = true;
+    setTimeout(() => { btnFinish.disabled = false; }, 2000);
+  }
+
   const name = document.getElementById('order-name').value;
   const rua = document.getElementById('order-rua').value;
   const bairro = document.getElementById('order-bairro').value;
@@ -343,6 +389,19 @@ function finishOrder() {
   const obs = document.getElementById('order-obs').value;
   const fullAddr = rua ? `${rua}, ${numero} — ${bairro}, ${cidade} (CEP ${cep})` : '';
 
+  let itemsList = '';
+  let total = 0;
+  Object.values(cart.items).forEach(i => {
+    itemsList += `• ${i.qty}x ${i.name} (${i.size}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
+    total += i.price * i.qty;
+  });
+
+  Object.entries(cart.drinks).forEach(([drinkName, data]) => {
+    itemsList += `• ${data.qty}x ${drinkName} - R$ ${(data.price * data.qty).toFixed(2).replace('.', ',')}\n`;
+    total += data.price * data.qty;
+  });
+
+  // 1. Abre o WhatsApp
   let msg = `*PEDIDO - Barbosa Restaurante*\n\n`;
   msg += `*Cliente:* ${name}\n`;
   msg += `*Tipo:* ${orderType}\n`;
@@ -353,24 +412,17 @@ function finishOrder() {
     msg += `*Referência:* ${ref}\n`;
   }
 
-  let total = 0;
-  msg += `\n*Itens:*\n`;
-  Object.values(cart.items).forEach(i => {
-    msg += `• ${i.qty}x ${i.name} (${i.size}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
-    total += i.price * i.qty;
-  });
-
-  Object.entries(cart.drinks).forEach(([drinkName, data]) => {
-    msg += `• ${data.qty}x ${drinkName} - R$ ${(data.price * data.qty).toFixed(2).replace('.', ',')}\n`;
-    total += data.price * data.qty;
-  });
-
+  msg += `\n*Itens:*\n${itemsList}`;
   msg += `\n*Subtotal:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
   if (obs) msg += `\n*Observações:* ${obs}\n`;
 
   msg += `\n_Favor informar a taxa de entrega e tempo estimado._`;
 
-  window.open(`https://wa.me/5512991136258?text=${encodeURIComponent(msg)}`, '_blank');
+  showToast('✅ Pedido enviado! Abrindo WhatsApp...');
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  // 4. Limpa o carrinho silenciosamente e fecha o modal
+  resetCartSilent();
 }
 
 function showToast(msg) {
@@ -382,7 +434,7 @@ function showToast(msg) {
 
 function scrollToSection(id) {
   const el = document.getElementById(id);
-  window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+  if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
 }
 
 /* ===== CEP AUTO-FILL (ViaCEP) ===== */
@@ -508,9 +560,14 @@ function resetCEPFields() {
 }
 
 // Observador de Revelação (Animação de Entrada)
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+} else {
+  // Fallback: exibe todos os elementos imediatamente
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+}
