@@ -137,6 +137,21 @@ function updateDrinkQty(name, delta, e) {
   updateUI();
 }
 
+function changeFlavor(select, e) {
+  e.stopPropagation();
+  const card = select.closest('.drink-card');
+  card.dataset.drink = select.value;
+  
+  // Re-sync UI state for the newly selected flavor
+  if (cart.drinks[select.value]) {
+    card.classList.add('selected');
+    card.querySelector('.qty-val').innerText = cart.drinks[select.value].qty;
+  } else {
+    card.classList.remove('selected');
+    card.querySelector('.qty-val').innerText = '1';
+  }
+}
+
 function updateUI() {
   let total = 0;
   let count = 0;
@@ -571,3 +586,64 @@ if ('IntersectionObserver' in window) {
   // Fallback: exibe todos os elementos imediatamente
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
 }
+
+// ── Menu hamburguer (mobile) ─────────────────────────────────────────────────
+function toggleNav() {
+  const nav  = document.getElementById('nav-links');
+  const btn  = document.getElementById('nav-hamburger');
+  const open = nav.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', String(open));
+}
+
+function closeNav() {
+  const nav = document.getElementById('nav-links');
+  const btn = document.getElementById('nav-hamburger');
+  nav.classList.remove('open');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
+}
+
+// Fecha o menu ao clicar fora dele
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('nav-links');
+  const btn = document.getElementById('nav-hamburger');
+  if (nav && nav.classList.contains('open') &&
+      !nav.contains(e.target) && !btn.contains(e.target)) {
+    closeNav();
+  }
+});
+
+// ── Otimizações do vídeo hero ────────────────────────────────────────────────
+(function initHeroVideo() {
+  const video = document.querySelector('.hero-video');
+  if (!video) return;
+
+  // 1. Pausa o vídeo quando a aba fica em background (economiza CPU/GPU)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      video.pause();
+    } else {
+      // Retoma apenas se o usuário não tem preferência por movimento reduzido
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        video.play().catch(() => {}); // Silencia erros de autoplay policy
+      }
+    }
+  });
+
+  // 2. Desativa o vídeo em conexões lentas (2G/slow-2g) para economizar dados
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn) {
+    const slowTypes = ['slow-2g', '2g'];
+    if (slowTypes.includes(conn.effectiveType)) {
+      video.remove(); // Remove o vídeo; o fallback background:var(--navy) entra
+    }
+    conn.addEventListener('change', () => {
+      if (slowTypes.includes(conn.effectiveType)) {
+        video.pause();
+      } else if (!document.hidden) {
+        video.play().catch(() => {});
+      }
+    });
+  }
+})();

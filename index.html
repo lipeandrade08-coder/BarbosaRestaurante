@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src https://viacep.com.br ws://localhost:* ws://127.0.0.1:*; frame-src https://maps.google.com https://www.google.com;">
+  <!-- <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src https://viacep.com.br ws://localhost:* ws://127.0.0.1:*; frame-src https://maps.google.com https://www.google.com;"> -->
+  <!-- DEV ONLY: ws://localhost:* e ws://127.0.0.1:* são para o Live Server. Remover antes do deploy! -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="img/logo.png" />
 
@@ -49,7 +50,7 @@
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "Barbosa Restaurante",
-    "image": "https://barbosarestaurante.com.br/img/og_image.png",
+    "image": "https://barbosarestaurante.com.br/img/og_image_1200x630.png",
     "url": "https://barbosarestaurante.com.br",
     "telephone": "+5512991136258",
     "priceRange": "R$",
@@ -84,7 +85,8 @@
   }
   </script>
 
-  <link rel="preload" as="image" href="img/bg.png">
+  <link rel="preload" href="img/bg.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="css/fonts/font_32.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -95,15 +97,26 @@
       <img src="img/logo.png" alt="Barbosa Restaurante">
       <span>Barbosa Restaurante </span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#cardapio">Cardápio</a></li>
-      <li><a href="#bebidas">Bebidas</a></li>
-      <li><a href="#localizacao">Localização</a></li>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#cardapio" onclick="closeNav()">Cardápio</a></li>
+      <li><a href="#bebidas" onclick="closeNav()">Bebidas</a></li>
+      <li><a href="#localizacao" onclick="closeNav()">Localização</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false"
+      onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
     <button class="nav-cta" onclick="scrollToSection('cardapio')">Pedir Agora</button>
   </nav>
 
   <section class="hero" id="inicio">
+    <!-- Vídeo de fundo em loop -->
+    <video class="hero-video" autoplay loop muted playsinline preload="auto" aria-hidden="true">
+      <source src="img/bg.mp4" type="video/mp4">
+    </video>
+    <!-- Overlay escuro sobre o vídeo -->
+    <div class="hero-overlay"></div>
+
     <!-- Partículas de Brasa -->
     <div class="ember" style="left: 15%; --duration: 6s; animation-delay: 0s;"></div>
     <div class="ember" style="left: 30%; --duration: 8s; animation-delay: 2s; width: 6px; height: 6px;"></div>
@@ -469,10 +482,10 @@
             <button class="qty-btn" onclick="updateDrinkQty('Fanta Laranja', 1, event)">+</button>
           </div>
         </div>
-        <div class="drink-card" data-drink="Suco Natural" onclick="toggleDrink('Suco Natural', 10, this)">
+        <div class="drink-card" data-drink="Suco Natural" onclick="toggleDrink('Suco Natural', 20, this)">
           <div class="drink-img" style="background-image: url('img/suco.png')"></div>
-          <div class="drink-name">Suco 1L</div>
-          <div class="drink-price">R$ 10,00</div>
+          <div class="drink-name">Suco Natural 1L</div>
+          <div class="drink-price">R$ 20,00</div>
           <div class="drink-qty">
             <button class="qty-btn" onclick="updateDrinkQty('Suco Natural', -1, event)">−</button>
             <span class="qty-val">1</span>
@@ -487,6 +500,35 @@
             <button class="qty-btn" onclick="updateDrinkQty('Coca-Cola 2L', -1, event)">−</button>
             <span class="qty-val">1</span>
             <button class="qty-btn" onclick="updateDrinkQty('Coca-Cola 2L', 1, event)">+</button>
+          </div>
+        </div>
+        <div class="drink-card" data-drink="Suco Caixinha (Goiaba)" onclick="toggleDrink(this.dataset.drink, 6, this)">
+          <div class="drink-img" style="background-image: url('img/suco_caixinha.png')"></div>
+          <div class="drink-name">Suco Caixinha 200ml</div>
+          <select class="drink-flavor-select" onclick="event.stopPropagation()" onchange="changeFlavor(this, event)">
+            <option value="Suco Caixinha (Goiaba)">Sabor: Goiaba</option>
+            <option value="Suco Caixinha (Maracujá)">Sabor: Maracujá</option>
+            <option value="Suco Caixinha (Uva)">Sabor: Uva</option>
+            <option value="Suco Caixinha (Pêssego)">Sabor: Pêssego</option>
+            <option value="Suco Caixinha (Laranja)">Sabor: Laranja</option>
+          </select>
+          <div class="drink-price">R$ 6,00</div>
+          <div class="drink-qty">
+            <button class="qty-btn"
+              onclick="updateDrinkQty(this.closest('.drink-card').dataset.drink, -1, event)">−</button>
+            <span class="qty-val">1</span>
+            <button class="qty-btn"
+              onclick="updateDrinkQty(this.closest('.drink-card').dataset.drink, 1, event)">+</button>
+          </div>
+        </div>
+        <div class="drink-card" data-drink="Suco Citrus 500ml" onclick="toggleDrink('Suco Citrus 500ml', 6, this)">
+          <div class="drink-img" style="background-image: url('img/suco_citrus.png')"></div>
+          <div class="drink-name">Suco Citrus 500ml</div>
+          <div class="drink-price">R$ 6,00</div>
+          <div class="drink-qty">
+            <button class="qty-btn" onclick="updateDrinkQty('Suco Citrus 500ml', -1, event)">−</button>
+            <span class="qty-val">1</span>
+            <button class="qty-btn" onclick="updateDrinkQty('Suco Citrus 500ml', 1, event)">+</button>
           </div>
         </div>
       </div>
