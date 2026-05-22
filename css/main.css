@@ -140,10 +140,10 @@ nav {
   justify-content: space-between;
   padding: 0 5%;
   height: 72px;
-  background: rgba(255, 255, 255, 0.8);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(110, 181, 224, 0.15);
+  background: rgba(13, 43, 69, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-logo {
@@ -164,7 +164,7 @@ nav {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .nav-links {
@@ -178,13 +178,13 @@ nav {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--text);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   transition: var(--transition);
 }
 
 .nav-links a:hover {
-  color: var(--blue);
+  color: var(--blue-lt);
 }
 
 .nav-cta {
@@ -239,7 +239,7 @@ nav {
   display: block;
   width: 24px;
   height: 2px;
-  background: var(--navy);
+  background: var(--white);
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
   transform-origin: center;
@@ -581,9 +581,10 @@ section {
   background: var(--white);
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: var(--shadow);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   contain: layout style paint;
 }
@@ -595,6 +596,7 @@ section {
 
 .menu-card:hover {
   transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
 }
 
 .card-img {
@@ -711,11 +713,15 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .15s;
+  transition: background .15s, transform .1s;
 }
 
 .pill-qty-btn:hover {
   background: rgba(255, 255, 255, .45);
+}
+
+.pill-qty-btn:active {
+  transform: scale(0.95);
 }
 
 .pill-qty-val {
@@ -831,6 +837,11 @@ section {
   border: none;
   cursor: pointer;
   font-weight: 700;
+  transition: background .15s, transform .1s;
+}
+
+.qty-btn:active {
+  transform: scale(0.95);
 }
 
 /* ── Seção de Avaliações — Design Premium ── */
@@ -1206,7 +1217,9 @@ footer strong {
 }
 
 .modal-box {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   width: 100%;
   max-width: 500px;
   border-radius: 32px;
@@ -1214,7 +1227,8 @@ footer strong {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .modal-header {
