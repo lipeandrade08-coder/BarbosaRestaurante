@@ -76,12 +76,31 @@ function resetCartSilent() {
 }
 
 function switchTab(id, btn) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  // Restringe ao elemento pai do botão clicado (a div .menu-tabs)
-  btn.closest('.menu-tabs').querySelectorAll('.tab-btn')
-    .forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active');
+  // Lógica isolada para ser reutilizada com e sem View Transitions
+  function _applyTabChange() {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.closest('.menu-tabs').querySelectorAll('.tab-btn')
+      .forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+
+    // Re-anima os cards da aba que acabou de entrar (GSAP)
+    if (window._gsapReady) {
+      gsap.fromTo(
+        `#tab-${id} .menu-card`,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out',
+          clearProps: 'transform,opacity' }
+      );
+    }
+  }
+
+  // View Transitions API: crossfade nativo entre abas
+  if (document.startViewTransition) {
+    document.startViewTransition(_applyTabChange);
+  } else {
+    _applyTabChange();
+  }
 }
 
 function handlePillClick(pill) {
@@ -575,16 +594,89 @@ function resetCEPFields() {
   document.getElementById('cep-msg').style.display = 'none';
 }
 
-// Observador de Revelação (Animação de Entrada)
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
+// ── GSAP + ScrollTrigger: Revelação em cascata dos elementos ────────────────
+// Flag global para que switchTab saiba se o GSAP já carregou
+window._gsapReady = false;
+
+function _initGSAP() {
+  window._gsapReady = true;
+
+  // Registra o plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Remove as classes CSS de reveal — o GSAP assume o controle
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.remove('reveal');
+    el.style.opacity = ''; // Limpa qualquer opacity inline que possa ter ficado
+  });
+
+  // ── 1. Cards do cardápio: entrada em cascata por aba ──────────────────────
+  // Observa cada .tab-content e anima os cards quando a seção entra na tela
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    gsap.from(tab.querySelectorAll('.menu-card'), {
+      scrollTrigger: {
+        trigger: tab.closest('section') || tab,
+        start: 'top 82%',
+        once: true, // Anima apenas uma vez (performance)
+      },
+      y: 50,
+      opacity: 0,
+      duration: 0.7,
+      stagger: 0.15, // Cada card entra 0.15s depois do anterior
+      ease: 'power3.out',
+      clearProps: 'transform,opacity', // Remove propriedades inline após animar
     });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-} else {
-  // Fallback: exibe todos os elementos imediatamente
+  });
+
+  // ── 2. Drink cards: entrada em onda ───────────────────────────────────────
+  gsap.from('.drink-card', {
+    scrollTrigger: {
+      trigger: '#bebidas',
+      start: 'top 82%',
+      once: true,
+    },
+    y: 40,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.08,
+    ease: 'power3.out',
+    clearProps: 'transform,opacity',
+  });
+
+  // ── 3. Section headers: desliza de baixo para cima ────────────────────────
+  gsap.utils.toArray('.section-header').forEach(header => {
+    gsap.from(header, {
+      scrollTrigger: {
+        trigger: header,
+        start: 'top 88%',
+        once: true,
+      },
+      y: 30,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power2.out',
+      clearProps: 'transform,opacity',
+    });
+  });
+
+  // ── 4. Avaliações: cards em cascata ───────────────────────────────────────
+  gsap.from('.review-card', {
+    scrollTrigger: {
+      trigger: '#avaliacoes',
+      start: 'top 80%',
+      once: true,
+    },
+    y: 40,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.12,
+    ease: 'power3.out',
+    clearProps: 'transform,opacity',
+  });
+}
+
+// Fallback: se o GSAP não carregar (offline, CDN bloqueado), exibe tudo
+function _gsapFallback() {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
 }
 

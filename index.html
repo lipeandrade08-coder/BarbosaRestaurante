@@ -89,6 +89,15 @@
   <link rel="preload" href="css/fonts/font_32.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    /* View Transitions API: crossfade suave ao trocar abas do cardápio */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.25s;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
 </head>
 
 <body>
@@ -882,6 +891,35 @@
         scale: 1.03,        // Leve zoom ao hover
         gyroscope: false,   // Giroscópio desativado (só mouse no hover: hover)
       });
+    }
+  </script>
+
+  <!-- GSAP + ScrollTrigger: animações de scroll em cascata (padrão da indústria) -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+    integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    onerror="_gsapFallback()"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+    integrity="sha512-onMTgk5do3s0O6meFsP4F9r9sGRJHa7rWLq1ZZBHliU4aXFBapYXlxeEEEGuPZcGN8ENoMQJCKnVLMKFU7QBg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    onerror="_gsapFallback()"
+  ></script>
+  <script>
+    // Inicia o GSAP se ambos os scripts carregaram; senão, fallback CSS simples
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      // Respeita preferência por movimento reduzido (acessibilidade)
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        _initGSAP();
+      } else {
+        _gsapFallback();
+      }
+    } else {
+      _gsapFallback();
     }
   </script>
 </body>

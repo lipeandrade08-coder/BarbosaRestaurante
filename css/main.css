@@ -586,14 +586,11 @@ section {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  /* contain removido para permitir o contexto 3D do Vanilla-Tilt */
+  /* Aloca layer GPU antecipada para animações GSAP a 60fps */
+  will-change: transform, opacity;
 }
 
-.menu-card:hover,
-.drink-card:hover {
-  will-change: transform;
-}
-
+/* GSAP e Vanilla-Tilt controlam o transform — hover apenas realça a sombra */
 .menu-card:hover {
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
 }
@@ -747,6 +744,8 @@ section {
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   contain: layout style paint;
+  /* Aloca layer GPU antecipada para animações GSAP a 60fps */
+  will-change: transform, opacity;
 }
 
 .drink-flavor-select {
