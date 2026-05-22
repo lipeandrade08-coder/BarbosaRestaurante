@@ -140,16 +140,17 @@ function updateDrinkQty(name, delta, e) {
 function changeFlavor(select, e) {
   e.stopPropagation();
   const card = select.closest('.drink-card');
-  card.dataset.drink = select.value;
-  
-  // Re-sync UI state for the newly selected flavor
-  if (cart.drinks[select.value]) {
-    card.classList.add('selected');
-    card.querySelector('.qty-val').innerText = cart.drinks[select.value].qty;
-  } else {
-    card.classList.remove('selected');
-    card.querySelector('.qty-val').innerText = '1';
+  const oldName = card.dataset.drink;
+  const newName = select.value;
+  if (oldName === newName) return;
+  // Migra qty do sabor antigo para o novo, evitando que o sabor antigo
+  // fique preso em cart.drinks e vá para o pedido do WhatsApp com qty inválido
+  if (cart.drinks[oldName]) {
+    cart.drinks[newName] = { ...cart.drinks[oldName] };
+    delete cart.drinks[oldName];
   }
+  card.dataset.drink = newName;
+  updateUI();
 }
 
 function updateUI() {

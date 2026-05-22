@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- PRODUÇÃO: descomentar e remover as entradas ws:// do connect-src antes do deploy -->
   <!-- <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src https://viacep.com.br ws://localhost:* ws://127.0.0.1:*; frame-src https://maps.google.com https://www.google.com;"> -->
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src https://viacep.com.br ws://localhost:* ws://127.0.0.1:*; frame-src https://maps.google.com https://www.google.com;"> -->
   <!-- DEV ONLY: ws://localhost:* e ws://127.0.0.1:* são para o Live Server. Remover antes do deploy! -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="img/logo.png" />
@@ -85,7 +86,6 @@
   }
   </script>
 
-  <link rel="preload" href="img/bg.mp4" as="video" type="video/mp4">
   <link rel="preload" href="css/fonts/font_32.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/main.css" />
