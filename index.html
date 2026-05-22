@@ -865,7 +865,25 @@
 
   <div id="toast"></div>
 
+  <!-- Vanilla-Tilt: efeito 3D "Apple" nos cards (~4kb, sem dependências) -->
   <script src="js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" integrity="sha512-we3LoxvMH0k79cXNMGLJSKkNWh1FIGpJfTLqoeCrjbRfqQDVmQw2AHAWWaBRQNwFRFLOFouDKS1vN9bE0m3A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    // Script no fim do <body>: DOM já está disponível, sem necessidade de DOMContentLoaded.
+    // Ativa somente em dispositivos com ponteiro fino (mouse) e sem preferência por movimento reduzido.
+    if (window.matchMedia('(hover: hover)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+
+      VanillaTilt.init(document.querySelectorAll('.menu-card'), {
+        max: 12,            // Rotação máxima em graus — suave e elegante
+        speed: 500,         // Velocidade da transição de retorno (ms)
+        glare: true,        // Reflexo dinâmico premium por cima do glassmorphism
+        'max-glare': 0.15,  // Opacidade do reflexo — discreto e de alto valor
+        scale: 1.03,        // Leve zoom ao hover
+        gyroscope: false,   // Giroscópio desativado (só mouse no hover: hover)
+      });
+    }
+  </script>
 </body>
 
 </html>

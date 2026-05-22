@@ -586,7 +586,7 @@ section {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  contain: layout style paint;
+  /* contain removido para permitir o contexto 3D do Vanilla-Tilt */
 }
 
 .menu-card:hover,
@@ -595,7 +595,6 @@ section {
 }
 
 .menu-card:hover {
-  transform: translateY(-10px) scale(1.01);
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
 }
 
@@ -1663,6 +1662,7 @@ footer strong {
 @media (hover: none) {
   .menu-card:hover {
     transform: none;
+    box-shadow: none;
   }
 
   .drink-card:hover {
