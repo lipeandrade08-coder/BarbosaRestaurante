@@ -586,8 +586,7 @@ section {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  /* Aloca layer GPU antecipada para animações GSAP a 60fps */
-  will-change: transform, opacity;
+  /* will-change aplicado dinamicamente pelo JS ao iniciar hover/tilt */
 }
 
 /* GSAP e Vanilla-Tilt controlam o transform — hover apenas realça a sombra */
@@ -744,8 +743,6 @@ section {
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   contain: layout style paint;
-  /* Aloca layer GPU antecipada para animações GSAP a 60fps */
-  will-change: transform, opacity;
 }
 
 .drink-flavor-select {
@@ -758,7 +755,8 @@ section {
   background: var(--off);
   color: var(--navy);
   font-family: inherit;
-  font-size: 0.85rem;
+  /* 16px mínimo: evita zoom automático ao selecionar no iOS Safari */
+  font-size: max(0.85rem, 16px);
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -1320,7 +1318,8 @@ footer strong {
   border: 2px solid var(--off);
   background: var(--off);
   font-family: inherit;
-  font-size: 1rem;
+  /* Mínimo 16px: evita zoom automático no iOS Safari ao focar */
+  font-size: max(1rem, 16px);
   transition: var(--transition);
   outline: none;
 }
@@ -1346,6 +1345,7 @@ footer strong {
   cursor: pointer;
   border: none;
   font-size: 1rem;
+  min-height: 56px; /* tap target confortável em mobile */
   transition: var(--transition);
 }
 
@@ -1495,13 +1495,14 @@ footer strong {
     top: 72px;
     left: 0;
     right: 0;
-    background: rgba(255,255,255,0.98);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    /* Fundo escuro glassmorphism — coerente com a nav navy */
+    background: rgba(13, 43, 69, 0.97);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
     flex-direction: column;
     gap: 0;
     padding: 12px 0 20px;
-    border-bottom: 1px solid rgba(110,181,224,0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 999;
   }
 
@@ -1510,12 +1511,19 @@ footer strong {
   }
 
   .nav-links li a {
-    display: block;
+    display: flex;
     padding: 14px 24px;
     font-size: 1rem;
-    min-height: 44px;
-    display: flex;
+    min-height: 48px;
     align-items: center;
+    /* Texto branco coerente com fundo navy */
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-links li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--blue-lt) !important;
   }
 
   .nav-hamburger {
@@ -1529,6 +1537,11 @@ footer strong {
   /* Hero */
   .hero {
     padding: 90px 20px 60px;
+  }
+
+  /* Partículas de brasa: desligadas em mobile para economizar CPU */
+  .ember {
+    display: none;
   }
 
   .hero h1 {
@@ -1699,5 +1712,104 @@ footer strong {
 
   .ember {
     display: none;
+  }
+}
+
+/* ─── Desktop wide (≥ 1280px) ────────────────────────────────────────────── */
+@media (min-width: 1280px) {
+
+  /* Cardápio: 3 colunas fixas em telas largas */
+  .tab-content {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  /* Bebidas: mais colunas, aproveita o espaço */
+  .drinks-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  /* Seções com padding mais generoso */
+  section {
+    padding: 120px 5%;
+  }
+
+  /* Avaliações: 3 colunas */
+  .reviews-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ─── Desktop muito largo (≥ 1600px) ─────────────────────────────────────── */
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  nav {
+    padding: 0 8%;
+  }
+
+  section {
+    padding: 120px 8%;
+  }
+}
+
+/* ─── Telas muito pequenas (≤ 380px — celulares compactos) ───────────────── */
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 6px 14px;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+  }
+
+  .hero-btns .btn {
+    padding: 14px 24px;
+    font-size: 0.85rem;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .card-prices {
+    flex-wrap: wrap;
+  }
+
+  .price-pill {
+    flex: 1 1 calc(50% - 5px);
+  }
+
+  .drinks-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .drink-card {
+    padding: 12px 8px;
+  }
+
+  .modal-box {
+    max-height: 96vh;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .btn-step {
+    width: 100%;
   }
 }

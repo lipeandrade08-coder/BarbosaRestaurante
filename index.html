@@ -166,7 +166,7 @@
 <body>
   <nav>
     <a href="#inicio" class="nav-logo">
-      <img src="img/logo.png" alt="Barbosa Restaurante">
+      <img src="img/logo.png" alt="Barbosa Restaurante" loading="eager" fetchpriority="high" width="48" height="48">
       <span>Barbosa Restaurante </span>
     </a>
     <ul class="nav-links" id="nav-links">
@@ -182,8 +182,8 @@
   </nav>
 
   <section class="hero" id="inicio">
-    <!-- Vídeo de fundo em loop -->
-    <video class="hero-video" autoplay loop muted playsinline preload="auto" aria-hidden="true">
+    <!-- Vídeo de fundo: desativado em mobile (<768px) para economizar dados -->
+    <video class="hero-video" autoplay loop muted playsinline preload="auto" aria-hidden="true" id="hero-vid">
       <source src="img/bg.mp4" type="video/mp4">
     </video>
     <!-- Overlay escuro sobre o vídeo -->
@@ -198,7 +198,7 @@
     <div class="ember" style="left: 90%; --duration: 7.5s; animation-delay: 2.5s; width: 5px; height: 5px;"></div>
     <div class="ember" style="left: 5%; --duration: 5.5s; animation-delay: 4s; width: 4px; height: 4px;"></div>
 
-    <img src="img/logo.png" alt="Barbosa Restaurante – Melhor Churrasco em Guaratinguetá SP" class="hero-img">
+    <img src="img/logo.png" alt="Barbosa Restaurante – Melhor Churrasco em Guaratinguetá SP" class="hero-img" loading="eager" fetchpriority="high" width="160" height="160">
     <div class="hero-badge">🔥 Autêntico Churrasco • Est. 2025</div>
     <h1>Barbosa<em>Restaurante</em></h1>
     <p class="hero-sub">O melhor sabor de Guaratinguetá. Carnes premium, marmitex caprichado e entrega rápida.</p>
@@ -943,8 +943,20 @@
   <script>
     // Script no fim do <body>: DOM já está disponível, sem necessidade de DOMContentLoaded.
     // Ativa somente em dispositivos com ponteiro fino (mouse) e sem preferência por movimento reduzido.
-    if (window.matchMedia('(hover: hover)').matches &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const _isMobile = window.matchMedia('(hover: none)').matches || window.innerWidth < 768;
+
+    // ── Desativa vídeo hero em mobile para economizar dados e CPU ─────────────
+    if (_isMobile) {
+      const heroVid = document.getElementById('hero-vid');
+      if (heroVid) {
+        heroVid.pause();
+        heroVid.removeAttribute('autoplay');
+        heroVid.style.display = 'none';
+      }
+    }
+
+    // ── Vanilla-Tilt: só em desktop com mouse ─────────────────────────────
+    if (!_isMobile && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
       VanillaTilt.init(document.querySelectorAll('.menu-card'), {
         max: 12,            // Rotação máxima em graus — suave e elegante
@@ -953,6 +965,12 @@
         'max-glare': 0.15,  // Opacidade do reflexo — discreto e de alto valor
         scale: 1.03,        // Leve zoom ao hover
         gyroscope: false,   // Giroscópio desativado (só mouse no hover: hover)
+      });
+
+      // will-change dinâmico: ativa na GPU só durante o hover (evita pressão de memória)
+      document.querySelectorAll('.menu-card').forEach(card => {
+        card.addEventListener('mouseenter', () => { card.style.willChange = 'transform, opacity'; }, { passive: true });
+        card.addEventListener('mouseleave', () => { card.style.willChange = 'auto'; }, { passive: true });
       });
     }
   </script>
