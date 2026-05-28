@@ -8,7 +8,7 @@ with open('css/fonts.css', 'r') as f:
     css_content = f.read()
 
 # Find all url(...) patterns
-urls = re.findall(r'url\((https://[^)]+\.woff2)\)', css_content)
+urls = re.findall(r'url\((https://[^)]+\.(?:woff2|woff|ttf))\)', css_content)
 
 for i, url in enumerate(urls):
     filename = f"font_{i}.woff2"

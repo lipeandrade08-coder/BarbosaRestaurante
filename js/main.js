@@ -8,11 +8,13 @@ let paymentMethod = 'Dinheiro';
 
 // Sanitizador de HTML — previne XSS ao injetar dados do usuário via innerHTML
 function esc(str) {
+  if (str === null || str === undefined) return '';
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 function setOrderType(type, btn) {
@@ -216,14 +218,18 @@ function closeModal() {
 
 function renderCartList() {
   const list = document.getElementById('cart-items-list');
-  list.innerHTML = '';
+
+  // 1. Cria um fragmento de DOM na memória (não afeta a tela, zero repaints)
+  const fragment = document.createDocumentFragment();
   let total = 0;
 
+  // Renderiza Carnes
   Object.entries(cart.items).forEach(([key, item]) => {
     total += item.price * item.qty;
     // Usa esc() em todos os dados do usuário para prevenir XSS via innerHTML
     const safeName = esc(item.name);
     const safeSize = esc(item.size);
+
     const row = document.createElement('div');
     row.className = 'cart-item-row';
     row.innerHTML = `
@@ -238,24 +244,31 @@ function renderCartList() {
         </div>
       </div>
     `;
+
     // Botões criados via JS para evitar injeção de código no atributo onclick
     const btnMinus = document.createElement('button');
     btnMinus.className = 'qty-btn';
     btnMinus.textContent = '−';
     btnMinus.onclick = () => updateItemQty(key, -1);
+
     const btnPlus = document.createElement('button');
     btnPlus.className = 'qty-btn';
     btnPlus.textContent = '+';
     btnPlus.onclick = () => updateItemQty(key, 1);
+
     const qtyDiv = row.querySelector('.drink-qty');
     qtyDiv.insertBefore(btnMinus, qtyDiv.firstChild);
     qtyDiv.appendChild(btnPlus);
-    list.appendChild(row);
+
+    // Anexa ao fragmento (ainda invisível na tela)
+    fragment.appendChild(row);
   });
 
+  // Renderiza Bebidas
   Object.entries(cart.drinks).forEach(([name, data]) => {
     total += data.price * data.qty;
     const safeDrinkName = esc(name);
+
     const row = document.createElement('div');
     row.className = 'cart-item-row';
     row.innerHTML = `
@@ -270,19 +283,28 @@ function renderCartList() {
         </div>
       </div>
     `;
+
     const btnMinus = document.createElement('button');
     btnMinus.className = 'qty-btn';
     btnMinus.textContent = '−';
     btnMinus.onclick = () => updateDrinkQtyModal(name, -1);
+
     const btnPlus = document.createElement('button');
     btnPlus.className = 'qty-btn';
     btnPlus.textContent = '+';
     btnPlus.onclick = () => updateDrinkQtyModal(name, 1);
+
     const qtyDiv = row.querySelector('.drink-qty');
     qtyDiv.insertBefore(btnMinus, qtyDiv.firstChild);
     qtyDiv.appendChild(btnPlus);
-    list.appendChild(row);
+
+    // Anexa ao fragmento
+    fragment.appendChild(row);
   });
+
+  // 2. Substitui todo o conteúdo de uma vez — API moderna, um único ciclo do motor
+  // Muito mais performático que innerHTML = '' seguido de N appendChild()
+  list.replaceChildren(fragment);
 
   document.getElementById('modal-total-val').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
@@ -436,26 +458,45 @@ function finishOrder() {
     total += data.price * data.qty;
   });
 
-  // 1. Abre o WhatsApp
-  let msg = `*PEDIDO - Barbosa Restaurante*\n\n`;
-  msg += `*Cliente:* ${name}\n`;
-  msg += `*Tipo:* ${orderType}\n`;
-  msg += `*Pagamento:* ${paymentMethod}\n`;
+  // 1. Monta o Array de Strings (evita problemas de interpolação com \n em alguns browsers)
+  let msgLines = [
+    '*PEDIDO - Barbosa Restaurante*',
+    '',
+    `*Cliente:* ${name}`,
+    `*Tipo:* ${orderType}`,
+    `*Pagamento:* ${paymentMethod}`
+  ];
 
   if (orderType === 'Entrega') {
-    msg += `*Endereço:* ${fullAddr}\n`;
-    msg += `*Referência:* ${ref}\n`;
+    msgLines.push(`*Endereço:* ${fullAddr}`);
+    msgLines.push(`*Referência:* ${ref}`);
   }
 
-  msg += `\n*Itens:*\n${itemsList}`;
-  msg += `\n*Subtotal:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
-  if (obs) msg += `\n*Observações:* ${obs}\n`;
+  msgLines.push('');
+  msgLines.push('*Itens:*');
 
-  msg += `\n_Favor informar a taxa de entrega e tempo estimado._`;
+  // Divide a string itemsList que você já gerou em linhas limpas
+  const cleanItemsList = itemsList.trim().split('\n');
+  msgLines = msgLines.concat(cleanItemsList);
+
+  msgLines.push('');
+  msgLines.push(`*Subtotal:* R$ ${total.toFixed(2).replace('.', ',')}`);
+
+  if (obs) {
+    msgLines.push('');
+    msgLines.push(`*Observações:* ${obs}`);
+  }
+
+  msgLines.push('');
+  msgLines.push('_Favor informar a taxa de entrega e tempo estimado._');
+
+  // 2. Transforma o Array numa string unida por quebras de linha limpas
+  const finalMsg = msgLines.join('\n');
 
   showToast('✅ Pedido enviado! Abrindo WhatsApp...');
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  // 3. encodeURIComponent agora lida com uma string perfeitamente estruturada
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(finalMsg)}`, '_blank', 'noopener,noreferrer');
   // 4. Limpa o carrinho silenciosamente e fecha o modal
   resetCartSilent();
 }
@@ -707,7 +748,45 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ── Phone Popup (Rodapé) ─────────────────────────────────────────────────────
+function togglePhonePopup(e) {
+  e.stopPropagation();
+  const btn   = document.getElementById('footer-phone-btn');
+  const popup = document.getElementById('phone-popup');
+  const isOpen = popup.classList.contains('open');
+
+  if (isOpen) {
+    popup.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    popup.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Fecha ao clicar fora ou pressionar Escape
+document.addEventListener('click', () => {
+  const popup = document.getElementById('phone-popup');
+  const btn   = document.getElementById('footer-phone-btn');
+  if (popup && popup.classList.contains('open')) {
+    popup.classList.remove('open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const popup = document.getElementById('phone-popup');
+    const btn   = document.getElementById('footer-phone-btn');
+    if (popup && popup.classList.contains('open')) {
+      popup.classList.remove('open');
+      if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.focus(); }
+    }
+  }
+});
+
 // ── Otimizações do vídeo hero ────────────────────────────────────────────────
+
 (function initHeroVideo() {
   const video = document.querySelector('.hero-video');
   if (!video) return;

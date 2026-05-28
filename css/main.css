@@ -1093,20 +1093,253 @@ section {
   box-shadow: var(--shadow);
 }
 
-/* Rodapé */
+/* =========================================
+   FOOTER PREMIUM (Grid Layout)
+   ========================================= */
 footer {
   background: var(--navy);
-  color: rgba(255, 255, 255, 0.6);
-  padding: 60px 5%;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 80px 5% 0; /* Padding superior generoso, inferior zerado (bottom bar resolve) */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: 'Jost', sans-serif;
 }
 
-footer strong {
+.footer-grid {
+  display: grid;
+  /* Auto-fit cria as colunas dinamicamente. Min 280px previne quebra bizarra em telas pequenas */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  padding-bottom: 60px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Coluna 1: Marca */
+.footer-brand-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
   color: var(--white);
-  display: block;
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.footer-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-link {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-link:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: translateY(-3px);
+}
+
+/* Colunas 2 e 3: Títulos e Listas */
+.footer-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.footer-nav,
+.footer-contact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-nav a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.footer-nav a:hover {
+  color: var(--blue-lt);
+  padding-left: 6px; /* Micro-interação elegante */
+}
+
+.footer-contact-list li {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.footer-contact-list strong {
+  color: var(--white);
+}
+
+/* Bottom Bar (Direitos e Assinatura) */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px 0;
+  background: rgba(0, 0, 0, 0.15); /* Escurece levemente a base */
+}
+
+.bottom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright {
+  font-size: 0.85rem;
+}
+
+.agency-signature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.agency-signature img {
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.agency-signature a {
+  color: #A855F7; /* Roxo da 2Type */
+  font-weight: 800;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.agency-signature a:hover {
+  opacity: 0.8;
+}
+
+/* ── Phone Popup (Rodapé) ───────────────────────────────────────────────── */
+.phone-popup-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.phone-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.phone-trigger:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.phone-trigger svg {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.phone-trigger[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.phone-popup {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  background: rgba(13, 43, 69, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 200px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  z-index: 500;
+  opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.phone-popup.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.phone-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.phone-option:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--white);
+}
+
+.phone-option-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.phone-option-wpp .phone-option-icon {
+  background: rgba(37, 211, 102, 0.15);
+  color: #25D366;
+}
+
+.phone-option-wpp:hover {
+  background: rgba(37, 211, 102, 0.08);
 }
 
 /* Barra de Pedidos */
@@ -1485,6 +1718,13 @@ footer strong {
 }
 
 @media (max-width: 768px) {
+  /* .footer-grid dispensa override: auto-fit minmax(280px,1fr) empilha nativamente */
+  .bottom-flex {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
   nav {
     padding: 0 20px;
   }
