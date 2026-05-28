@@ -117,6 +117,11 @@ h4 {
   50%       { opacity: 0.5; }
 }
 
+@keyframes skeleton-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -158,6 +163,14 @@ nav {
   width: 48px;
   border-radius: 50%;
   object-fit: cover;
+  /* Anel dourado: separa o logo do fundo escuro da nav (contraste visual) */
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 85, 0.25), 0 4px 12px rgba(0,0,0,0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+.nav-logo:hover img {
+  box-shadow: 0 0 0 4px rgba(201, 169, 85, 0.45), 0 6px 18px rgba(0,0,0,0.5);
 }
 
 .nav-logo span {
@@ -188,36 +201,40 @@ nav {
 }
 
 .nav-cta {
-  background: var(--blue);
-  color: var(--white);
+  /* Ouro sobre navy → contraste ~10:1 (WCAG AAA) vs azul+branco ~2.3:1 */
+  background: var(--gold);
+  color: var(--navy);
   border: none;
   border-radius: 50px;
   padding: 10px 24px;
   font-family: 'Jost', sans-serif;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
-              background 0.3s cubic-bezier(0.4,0,0.2,1);
+              background 0.3s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
   position: relative;
   overflow: hidden;
   min-height: 44px;
+  letter-spacing: 0.03em;
 }
 
-/* Anel pulsante via ::after (GPU: opacity+scale, zero paint) */
+/* Anel pulsante dourado */
 .nav-cta::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 50px;
-  border: 2px solid rgba(110,181,224,0.5);
+  border: 2px solid rgba(201, 169, 85, 0.6);
   animation: pulseRing 2s ease-out infinite;
   pointer-events: none;
 }
 
 .nav-cta:hover {
-  background: var(--blue-dk);
+  background: #b8923f; /* gold escurecido — mantém contraste navy ~8:1 */
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 169, 85, 0.4);
 }
 
 /* Hamburguer — oculto em desktop */
@@ -1054,7 +1071,9 @@ section {
 
 /* Localização */
 #localizacao {
-  background: var(--off);
+  background: linear-gradient(180deg, var(--white) 0%, var(--off) 100%);
+  position: relative;
+  z-index: 0;
 }
 
 .loc-grid {
@@ -1090,7 +1109,58 @@ section {
   border-radius: 24px;
   overflow: hidden;
   height: 450px;
+  min-height: 320px;
   box-shadow: var(--shadow);
+  position: relative;
+  background: linear-gradient(135deg, #e2eaf0 0%, #d0dde8 100%);
+}
+
+/* Skeleton screen animado enquanto o mapa carrega */
+.map-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.45) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Ícone de mapa decorativo centralizado durante o carregamento */
+.map-frame::after {
+  content: '📍';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  opacity: 0.25;
+  z-index: 0;
+  pointer-events: none;
+  line-height: 450px; /* alinhamento vertical via line-height */
+  text-align: center;
+}
+
+/* Remove os pseudo-elementos quando o iframe carregar */
+.map-frame.loaded::before,
+.map-frame.loaded::after {
+  display: none;
+}
+
+.map-frame iframe {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 /* =========================================
@@ -1100,8 +1170,22 @@ footer {
   background: var(--navy);
   color: rgba(255, 255, 255, 0.7);
   padding: 80px 5% 0; /* Padding superior generoso, inferior zerado (bottom bar resolve) */
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, transparent, rgba(110,181,224,0.4), var(--gold), rgba(110,181,224,0.4), transparent) 1;
   font-family: 'Jost', sans-serif;
+  position: relative;
+}
+
+/* Sombra de transição suave acima do footer */
+footer::before {
+  content: '';
+  position: absolute;
+  top: -48px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, rgba(13,43,69,0.12));
+  pointer-events: none;
 }
 
 .footer-grid {
@@ -1231,14 +1315,18 @@ footer {
 }
 
 .agency-signature a {
-  color: #A855F7; /* Roxo da 2Type */
+  /* Branco puro sobre navy → contraste 15:1 (WCAG AAA), visível e elegante */
+  color: var(--white);
   font-weight: 800;
-  text-decoration: none;
-  transition: opacity 0.2s;
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 169, 85, 0.7); /* sublinhado dourado discreto */
+  text-underline-offset: 3px;
+  transition: color 0.2s, text-decoration-color 0.2s;
 }
 
 .agency-signature a:hover {
-  opacity: 0.8;
+  color: var(--gold);
+  text-decoration-color: var(--gold);
 }
 
 /* ── Phone Popup (Rodapé) ───────────────────────────────────────────────── */

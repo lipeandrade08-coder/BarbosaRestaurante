@@ -61,13 +61,13 @@ function resetCartSilent() {
   // Reset do formulário para evitar que dados de um cliente vazem para o próximo
   const elName = document.getElementById('order-name');
   if (elName) elName.value = '';
-  
+
   const elObs = document.getElementById('order-obs');
   if (elObs) elObs.value = '';
-  
+
   const elCep = document.getElementById('order-cep');
   if (elCep) elCep.value = '';
-  
+
   resetCEPFields();
 
   const btnDelivery = document.getElementById('type-delivery');
@@ -91,8 +91,10 @@ function switchTab(id, btn) {
       gsap.fromTo(
         `#tab-${id} .menu-card`,
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out',
-          clearProps: 'transform,opacity' }
+        {
+          y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out',
+          clearProps: 'transform,opacity'
+        }
       );
     }
   }
@@ -723,8 +725,8 @@ function _gsapFallback() {
 
 // ── Menu hamburguer (mobile) ─────────────────────────────────────────────────
 function toggleNav() {
-  const nav  = document.getElementById('nav-links');
-  const btn  = document.getElementById('nav-hamburger');
+  const nav = document.getElementById('nav-links');
+  const btn = document.getElementById('nav-hamburger');
   const open = nav.classList.toggle('open');
   btn.classList.toggle('open', open);
   btn.setAttribute('aria-expanded', String(open));
@@ -743,7 +745,7 @@ document.addEventListener('click', (e) => {
   const nav = document.getElementById('nav-links');
   const btn = document.getElementById('nav-hamburger');
   if (nav && nav.classList.contains('open') &&
-      !nav.contains(e.target) && !btn.contains(e.target)) {
+    !nav.contains(e.target) && !btn.contains(e.target)) {
     closeNav();
   }
 });
@@ -751,7 +753,7 @@ document.addEventListener('click', (e) => {
 // ── Phone Popup (Rodapé) ─────────────────────────────────────────────────────
 function togglePhonePopup(e) {
   e.stopPropagation();
-  const btn   = document.getElementById('footer-phone-btn');
+  const btn = document.getElementById('footer-phone-btn');
   const popup = document.getElementById('phone-popup');
   const isOpen = popup.classList.contains('open');
 
@@ -767,7 +769,7 @@ function togglePhonePopup(e) {
 // Fecha ao clicar fora ou pressionar Escape
 document.addEventListener('click', () => {
   const popup = document.getElementById('phone-popup');
-  const btn   = document.getElementById('footer-phone-btn');
+  const btn = document.getElementById('footer-phone-btn');
   if (popup && popup.classList.contains('open')) {
     popup.classList.remove('open');
     if (btn) btn.setAttribute('aria-expanded', 'false');
@@ -777,7 +779,7 @@ document.addEventListener('click', () => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const popup = document.getElementById('phone-popup');
-    const btn   = document.getElementById('footer-phone-btn');
+    const btn = document.getElementById('footer-phone-btn');
     if (popup && popup.classList.contains('open')) {
       popup.classList.remove('open');
       if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.focus(); }
@@ -798,7 +800,7 @@ document.addEventListener('keydown', (e) => {
     } else {
       // Retoma apenas se o usuário não tem preferência por movimento reduzido
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        video.play().catch(() => {}); // Silencia erros de autoplay policy
+        video.play().catch(() => { }); // Silencia erros de autoplay policy
       }
     }
   });
@@ -814,7 +816,7 @@ document.addEventListener('keydown', (e) => {
       if (slowTypes.includes(conn.effectiveType)) {
         video.pause();
       } else if (!document.hidden) {
-        video.play().catch(() => {});
+        video.play().catch(() => { });
       }
     });
   }
