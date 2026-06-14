@@ -1169,7 +1169,7 @@ section {
 footer {
   background: var(--navy);
   color: rgba(255, 255, 255, 0.7);
-  padding: 80px 5% 0; /* Padding superior generoso, inferior zerado (bottom bar resolve) */
+  padding: 80px 0 0;
   border-top: 3px solid transparent;
   border-image: linear-gradient(90deg, transparent, rgba(110,181,224,0.4), var(--gold), rgba(110,181,224,0.4), transparent) 1;
   font-family: 'Jost', sans-serif;
@@ -1190,10 +1190,11 @@ footer::before {
 
 .footer-grid {
   display: grid;
-  /* Auto-fit cria as colunas dinamicamente. Min 280px previne quebra bizarra em telas pequenas */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
-  padding-bottom: 60px;
+  padding: 0 5% 60px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-col {
@@ -1283,9 +1284,11 @@ footer::before {
 
 /* Bottom Bar (Direitos e Assinatura) */
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 24px 0;
-  background: rgba(0, 0, 0, 0.15); /* Escurece levemente a base */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 5%;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .bottom-flex {
@@ -1293,40 +1296,52 @@ footer::before {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .copyright {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
 }
 
 .agency-signature {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  gap: 12px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+}
+
+.agency-signature:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
 
 .agency-signature img {
   object-fit: contain;
-  border-radius: 6px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .agency-signature a {
-  /* Branco puro sobre navy → contraste 15:1 (WCAG AAA), visível e elegante */
   color: var(--white);
-  font-weight: 800;
-  text-decoration: underline;
-  text-decoration-color: rgba(201, 169, 85, 0.7); /* sublinhado dourado discreto */
-  text-underline-offset: 3px;
-  transition: color 0.2s, text-decoration-color 0.2s;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
 }
 
 .agency-signature a:hover {
   color: var(--gold);
-  text-decoration-color: var(--gold);
 }
 
 /* ── Phone Popup (Rodapé) ───────────────────────────────────────────────── */
