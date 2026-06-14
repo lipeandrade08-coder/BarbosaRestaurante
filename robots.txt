@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /js/
-Disallow: /css/
 Sitemap: https://barbosarestaurante.com.br/sitemap.xml

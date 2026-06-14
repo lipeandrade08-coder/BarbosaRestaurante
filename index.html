@@ -4,12 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- PRODUÇÃO: descomentar e remover as entradas ws:// do connect-src antes do deploy -->
-  <!-- <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src https://viacep.com.br ws://localhost:* ws://127.0.0.1:*; frame-src https://maps.google.com https://www.google.com;"> -->
-  <!-- DEV ONLY: ws://localhost:* e ws://127.0.0.1:* são para o Live Server. Remover antes do deploy! -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://viacep.com.br; frame-src https://maps.google.com https://www.google.com;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="img/logo.png" />
+  <link rel="icon" type="image/png" href="img/favicon-32.png" sizes="32x32" />
 
   <title>Barbosa Restaurante | Churrasco em Guaratinguetá – Marmitex, Costela e Mais</title>
   <meta name="description"
@@ -23,6 +21,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Barbosa Restaurante" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="format-detection" content="telephone=yes" />
   <link rel="canonical" href="https://barbosarestaurante.com.br/" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -38,10 +37,10 @@
   <meta property="og:description"
     content="O melhor churrasco do Vale do Paraíba! Marmitex P, M e G com costela desossada, parmegiana de carne e frango grelhado. Peça agora pelo WhatsApp." />
   <meta property="og:url" content="https://barbosarestaurante.com.br/" />
-  <meta property="og:image" content="https://barbosarestaurante.com.br/img/og_image_1200x630.png" />
+  <meta property="og:image" content="https://barbosarestaurante.com.br/img/og_image_1200x630.webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:type" content="image/webp" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:phone_number" content="+5512991136258" />
 
@@ -50,7 +49,7 @@
   <meta name="twitter:title" content="Barbosa Restaurante | Melhor Churrasco em Guaratinguetá – SP" />
   <meta name="twitter:description"
     content="O melhor churrasco do Vale do Paraíba! Marmitex P, M e G com costela desossada, parmegiana e frango. Peça pelo WhatsApp." />
-  <meta name="twitter:image" content="https://barbosarestaurante.com.br/img/og_image_1200x630.png" />
+  <meta name="twitter:image" content="https://barbosarestaurante.com.br/img/og_image_1200x630.webp" />
 
   <!-- Dados Estruturados (Schema.org) — melhora a visibilidade no Google -->
   <script type="application/ld+json">
@@ -58,7 +57,7 @@
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "Barbosa Restaurante",
-    "image": "https://barbosarestaurante.com.br/img/og_image_1200x630.png",
+    "image": "https://barbosarestaurante.com.br/img/og_image_1200x630.webp",
     "url": "https://barbosarestaurante.com.br",
     "telephone": "+5512991136258",
     "priceRange": "R$",
@@ -101,7 +100,7 @@
         "@type": "MenuItem",
         "name": "Kit Churrasco",
         "description": "Mix de carnes (Bovina, Suína, Linguiça e Frango) com arroz, farofa, salpicão e Coca-Cola 2L.",
-        "offers": { "@type": "Offer", "price": "100.00", "priceCurrency": "BRL" }
+        "offers": { "@type": "Offer", "price": "120.00", "priceCurrency": "BRL" }
       },
       {
         "@type": "MenuItem",
@@ -150,7 +149,9 @@
   }
   </script>
 
+  <!-- Pré-carrega Jost latin (body, botões, labels) e Cormorant Garamond latin (H1/H2 above-the-fold) -->
   <link rel="preload" href="css/fonts/font_32.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="css/fonts/font_14.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/main.css" />
 
@@ -167,13 +168,14 @@
 <body>
   <nav>
     <a href="#inicio" class="nav-logo">
-      <img src="img/logo.png" alt="Barbosa Restaurante" loading="eager" fetchpriority="high" width="48" height="48">
+      <img src="img/logo.webp" alt="Barbosa Restaurante" loading="eager" fetchpriority="high" width="48" height="48">
       <span>Barbosa Restaurante </span>
     </a>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#cardapio" onclick="closeNav()">Cardápio</a></li>
-      <li><a href="#bebidas" onclick="closeNav()">Bebidas</a></li>
-      <li><a href="#localizacao" onclick="closeNav()">Localização</a></li>
+      <li><a href="#cardapio" onclick="closeNav(); scrollToSection('cardapio'); return false;">Cardápio</a></li>
+      <li><a href="#bebidas" onclick="closeNav(); scrollToSection('bebidas'); return false;">Bebidas</a></li>
+      <li><a href="#localizacao" onclick="closeNav(); scrollToSection('localizacao'); return false;">Localização</a>
+      </li>
     </ul>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false"
       onclick="toggleNav()">
@@ -184,7 +186,9 @@
 
   <section class="hero" id="inicio">
     <!-- Vídeo de fundo: desativado em mobile (<768px) para economizar dados -->
-    <video class="hero-video" autoplay loop muted playsinline preload="auto" aria-hidden="true" id="hero-vid">
+    <video class="hero-video" autoplay loop muted playsinline preload="auto" aria-hidden="true" id="hero-vid"
+      poster="img/bg.webp">
+      <source src="img/bg.webm" type="video/webm">
       <source src="img/bg.mp4" type="video/mp4">
     </video>
     <!-- Overlay escuro sobre o vídeo -->
@@ -199,7 +203,7 @@
     <div class="ember" style="left: 90%; --duration: 7.5s; animation-delay: 2.5s; width: 5px; height: 5px;"></div>
     <div class="ember" style="left: 5%; --duration: 5.5s; animation-delay: 4s; width: 4px; height: 4px;"></div>
 
-    <img src="img/logo.png" alt="Barbosa Restaurante – Melhor Churrasco em Guaratinguetá SP" class="hero-img"
+    <img src="img/logo.webp" alt="Barbosa Restaurante – Melhor Churrasco em Guaratinguetá SP" class="hero-img"
       loading="eager" fetchpriority="high" width="160" height="160">
     <div class="hero-badge">🔥 Autêntico Churrasco • Est. 2025</div>
     <h1>Barbosa<em>Restaurante</em></h1>
@@ -255,7 +259,7 @@
 
       <div id="tab-churrasco" class="tab-content active">
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_tradicional.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_tradicional.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Marmita de Churrasco</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e carne bovina na brasa.</p>
@@ -285,29 +289,29 @@
           </div>
         </div>
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/kit_churrasco.png')"></div>
+          <div class="card-img" style="background-image: url('img/kit_churrasco.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Kit Churrasco</h3>
             <p class="card-desc">Mix de carnes (Bovina, Suína, Linguiça e Frango) com arroz, farofa, salpicão e uma
               Coca-Cola 2L.</p>
             <div class="card-prices">
-              <div class="price-pill" data-item="Kit Churrasco" data-size="4 Pessoas" data-price="100"
+              <div class="price-pill" data-item="Kit Churrasco" data-size="4 Pessoas" data-price="120"
                 onclick="handlePillClick(this)">
-                <span>4 Pessoas</span><strong>R$ 100</strong>
+                <span>4 Pessoas</span><strong>R$ 120</strong>
                 <div class="pill-qty"><button class="pill-qty-btn"
                     onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
                     class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
               </div>
-              <div class="price-pill" data-item="Kit Churrasco" data-size="6 Pessoas" data-price="150"
+              <div class="price-pill" data-item="Kit Churrasco" data-size="6 Pessoas" data-price="170"
                 onclick="handlePillClick(this)">
-                <span>6 Pessoas</span><strong>R$ 150</strong>
+                <span>6 Pessoas</span><strong>R$ 170</strong>
                 <div class="pill-qty"><button class="pill-qty-btn"
                     onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
                     class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
               </div>
-              <div class="price-pill" data-item="Kit Churrasco" data-size="8 Pessoas" data-price="200"
+              <div class="price-pill" data-item="Kit Churrasco" data-size="8 Pessoas" data-price="220"
                 onclick="handlePillClick(this)">
-                <span>8 Pessoas</span><strong>R$ 200</strong>
+                <span>8 Pessoas</span><strong>R$ 220</strong>
                 <div class="pill-qty"><button class="pill-qty-btn"
                     onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
                     class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
@@ -316,7 +320,7 @@
           </div>
         </div>
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_costela.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_costela.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Costela Desossada</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e nossa famosa costela macia.</p>
@@ -349,7 +353,7 @@
 
       <div id="tab-frango" class="tab-content">
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_frango.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_frango.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Frango Grelhado</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e filé de frango grelhado.</p>
@@ -379,7 +383,7 @@
           </div>
         </div>
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_milanesa.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_milanesa.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Frango à Milanesa</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e frango empanado crocante.</p>
@@ -412,7 +416,7 @@
 
       <div id="tab-peixes" class="tab-content">
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_peixe.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_peixe.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Filé de Peixe</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e filé de tilápia.</p>
@@ -445,7 +449,7 @@
 
       <div id="tab-parmegiana" class="tab-content">
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_parmegiana.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_parmegiana.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Parmegiana de Frango</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese, frango empanado e queijo.</p>
@@ -475,7 +479,7 @@
           </div>
         </div>
         <div class="menu-card reveal">
-          <div class="card-img" style="background-image: url('img/marmitex_parmegiana_carne.png')"></div>
+          <div class="card-img" style="background-image: url('img/marmitex_parmegiana_carne.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Parmegiana de Carne</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese, bife empanado e queijo.</p>
@@ -517,7 +521,7 @@
       </div>
       <div class="drinks-grid reveal">
         <div class="drink-card" data-drink="Coca-Cola Lata" onclick="toggleDrink('Coca-Cola Lata', 7, this)">
-          <div class="drink-img" style="background-image: url('img/coca.png')"></div>
+          <div class="drink-img" style="background-image: url('img/coca.webp')"></div>
           <div class="drink-name">Coca-Cola 350ml</div>
           <div class="drink-price">R$ 7,00</div>
           <div class="drink-qty">
@@ -527,7 +531,7 @@
           </div>
         </div>
         <div class="drink-card" data-drink="Coca-Cola Zero" onclick="toggleDrink('Coca-Cola Zero', 7, this)">
-          <div class="drink-img" style="background-image: url('img/coca_zero.png')"></div>
+          <div class="drink-img" style="background-image: url('img/coca_zero.webp')"></div>
           <div class="drink-name">Coca Zero 350ml</div>
           <div class="drink-price">R$ 7,00</div>
           <div class="drink-qty">
@@ -537,7 +541,7 @@
           </div>
         </div>
         <div class="drink-card" data-drink="Guaraná Lata" onclick="toggleDrink('Guaraná Lata', 7, this)">
-          <div class="drink-img" style="background-image: url('img/guarana.jpg')"></div>
+          <div class="drink-img" style="background-image: url('img/guarana.webp')"></div>
           <div class="drink-name">Guaraná 350ml</div>
           <div class="drink-price">R$ 7,00</div>
           <div class="drink-qty">
@@ -547,7 +551,7 @@
           </div>
         </div>
         <div class="drink-card" data-drink="Fanta Laranja" onclick="toggleDrink('Fanta Laranja', 7, this)">
-          <div class="drink-img" style="background-image: url('img/fanta_laranja.png')"></div>
+          <div class="drink-img" style="background-image: url('img/fanta_laranja.webp')"></div>
           <div class="drink-name">Fanta Laranja 350ml</div>
           <div class="drink-price">R$ 7,00</div>
           <div class="drink-qty">
@@ -556,8 +560,18 @@
             <button class="qty-btn" onclick="updateDrinkQty('Fanta Laranja', 1, event)">+</button>
           </div>
         </div>
+        <div class="drink-card" data-drink="Fanta Uva" onclick="toggleDrink('Fanta Uva', 7, this)">
+          <div class="drink-img" style="background-image: url('img/fanta_uva.webp')"></div>
+          <div class="drink-name">Fanta Uva 350ml</div>
+          <div class="drink-price">R$ 7,00</div>
+          <div class="drink-qty">
+            <button class="qty-btn" onclick="updateDrinkQty('Fanta Uva', -1, event)">−</button>
+            <span class="qty-val">1</span>
+            <button class="qty-btn" onclick="updateDrinkQty('Fanta Uva', 1, event)">+</button>
+          </div>
+        </div>
         <div class="drink-card" data-drink="Suco Natural" onclick="toggleDrink('Suco Natural', 20, this)">
-          <div class="drink-img" style="background-image: url('img/suco.png')"></div>
+          <div class="drink-img" style="background-image: url('img/suco.webp')"></div>
           <div class="drink-name">Suco Natural 1L</div>
           <div class="drink-price">R$ 20,00</div>
           <div class="drink-qty">
@@ -566,8 +580,28 @@
             <button class="qty-btn" onclick="updateDrinkQty('Suco Natural', 1, event)">+</button>
           </div>
         </div>
+        <div class="drink-card" data-drink="Água com Gás" onclick="toggleDrink('Água com Gás', 5, this)">
+          <div class="drink-img" style="background-image: url('img/agua_com_gas.webp')"></div>
+          <div class="drink-name">Água com Gás 500ml</div>
+          <div class="drink-price">R$ 5,00</div>
+          <div class="drink-qty">
+            <button class="qty-btn" onclick="updateDrinkQty('Água com Gás', -1, event)">−</button>
+            <span class="qty-val">1</span>
+            <button class="qty-btn" onclick="updateDrinkQty('Água com Gás', 1, event)">+</button>
+          </div>
+        </div>
+        <div class="drink-card" data-drink="Água sem Gás" onclick="toggleDrink('Água sem Gás', 4, this)">
+          <div class="drink-img" style="background-image: url('img/agua_sem_gas.webp')"></div>
+          <div class="drink-name">Água sem Gás 500ml</div>
+          <div class="drink-price">R$ 4,00</div>
+          <div class="drink-qty">
+            <button class="qty-btn" onclick="updateDrinkQty('Água sem Gás', -1, event)">−</button>
+            <span class="qty-val">1</span>
+            <button class="qty-btn" onclick="updateDrinkQty('Água sem Gás', 1, event)">+</button>
+          </div>
+        </div>
         <div class="drink-card" data-drink="Coca-Cola 2L" onclick="toggleDrink('Coca-Cola 2L', 20, this)">
-          <div class="drink-img" style="background-image: url('img/coca_2l.jpg')"></div>
+          <div class="drink-img" style="background-image: url('img/coca_2l.webp')"></div>
           <div class="drink-name">Coca-Cola 2L</div>
           <div class="drink-price">R$ 20,00</div>
           <div class="drink-qty">
@@ -577,7 +611,7 @@
           </div>
         </div>
         <div class="drink-card" data-drink="Suco Caixinha (Goiaba)" onclick="toggleDrink(this.dataset.drink, 6, this)">
-          <div class="drink-img" style="background-image: url('img/suco_caixinha.png')"></div>
+          <div class="drink-img" style="background-image: url('img/suco_caixinha.webp')"></div>
           <div class="drink-name">Suco Caixinha 200ml</div>
           <select class="drink-flavor-select" onclick="event.stopPropagation()" onchange="changeFlavor(this, event)">
             <option value="Suco Caixinha (Goiaba)">Sabor: Goiaba</option>
@@ -596,7 +630,7 @@
           </div>
         </div>
         <div class="drink-card" data-drink="Suco Citrus 500ml" onclick="toggleDrink('Suco Citrus 500ml', 6, this)">
-          <div class="drink-img" style="background-image: url('img/suco_citrus.png')"></div>
+          <div class="drink-img" style="background-image: url('img/suco_citrus.webp')"></div>
           <div class="drink-name">Suco Citrus 500ml</div>
           <div class="drink-price">R$ 6,00</div>
           <div class="drink-qty">
@@ -618,7 +652,7 @@
         <p class="section-sub">A satisfação dos nossos clientes é o que nos move todos os dias.</p>
         <div>
           <div class="reviews-score">
-            <span class="reviews-score-num">5.0</span>
+            <span class="reviews-score-num">4.9</span>
             <div>
               <div class="reviews-score-stars">★★★★★</div>
               <div class="reviews-score-label">Depoimentos de Clientes</div>
@@ -746,21 +780,27 @@
 
       <div class="footer-col brand-col">
         <h3 class="footer-brand-title">Barbosa Restaurante</h3>
-        <p class="footer-desc">O autêntico sabor do churrasco no Vale do Paraíba. Carnes premium, marmitex caprichado e entrega rápida em Guaratinguetá.</p>
+        <p class="footer-desc">O autêntico sabor do churrasco no Vale do Paraíba. Carnes premium, marmitex caprichado e
+          entrega rápida em Guaratinguetá.</p>
         <div class="footer-social">
-          <a href="https://www.instagram.com/barbosa_restaurantee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+          <a href="https://www.instagram.com/barbosa_restaurantee/" target="_blank" rel="noopener noreferrer"
+            aria-label="Instagram" class="social-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
             </svg>
           </a>
-          <a href="https://www.facebook.com/phelipe.barbosa.7359" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+          <a href="https://www.facebook.com/phelipe.barbosa.7359" target="_blank" rel="noopener noreferrer"
+            aria-label="Facebook" class="social-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
             </svg>
           </a>
           <a href="https://wa.me/5512991136258" aria-label="WhatsApp" class="social-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.194 1.605 6.014L.43 23.57l5.656-1.485c1.761.968 3.766 1.482 5.945 1.482 6.645 0 12.03-5.386 12.03-12.032C24 5.385 18.615 0 12.031 0zm0 21.61c-1.815 0-3.593-.487-5.15-1.41l-.37-.218-3.824 1.004 1.02-3.73-.24-.38a10.026 10.026 0 01-1.536-5.36c0-5.55 4.515-10.065 10.065-10.065 5.55 0 10.065 4.515 10.065 10.065S17.581 21.61 12.031 21.61zm5.512-7.53c-.302-.15-1.785-.882-2.062-.983-.277-.101-.48-.15-.68.151-.202.302-.78 1.004-.955 1.205-.176.2-.352.226-.654.076-1.547-.775-2.735-1.5-3.822-3.375-.2-.347.195-.319.782-1.493.1-.201.05-.376-.025-.527-.075-.15-.68-1.637-.932-2.242-.244-.59-.492-.511-.68-.521h-.58c-.2 0-.528.075-.805.376-.277.302-1.056 1.03-1.056 2.513s1.08 2.913 1.232 3.114c.15.2 2.124 3.242 5.143 4.542.718.309 1.28.493 1.716.63.722.23 1.38.197 1.898.118.583-.087 1.785-.729 2.036-1.433.252-.704.252-1.306.176-1.433-.075-.126-.277-.201-.58-.352z"/>
+              <path
+                d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.194 1.605 6.014L.43 23.57l5.656-1.485c1.761.968 3.766 1.482 5.945 1.482 6.645 0 12.03-5.386 12.03-12.032C24 5.385 18.615 0 12.031 0zm0 21.61c-1.815 0-3.593-.487-5.15-1.41l-.37-.218-3.824 1.004 1.02-3.73-.24-.38a10.026 10.026 0 01-1.536-5.36c0-5.55 4.515-10.065 10.065-10.065 5.55 0 10.065 4.515 10.065 10.065S17.581 21.61 12.031 21.61zm5.512-7.53c-.302-.15-1.785-.882-2.062-.983-.277-.101-.48-.15-.68.151-.202.302-.78 1.004-.955 1.205-.176.2-.352.226-.654.076-1.547-.775-2.735-1.5-3.822-3.375-.2-.347.195-.319.782-1.493.1-.201.05-.376-.025-.527-.075-.15-.68-1.637-.932-2.242-.244-.59-.492-.511-.68-.521h-.58c-.2 0-.528.075-.805.376-.277.302-1.056 1.03-1.056 2.513s1.08 2.913 1.232 3.114c.15.2 2.124 3.242 5.143 4.542.718.309 1.28.493 1.716.63.722.23 1.38.197 1.898.118.583-.087 1.785-.729 2.036-1.433.252-.704.252-1.306.176-1.433-.075-.126-.277-.201-.58-.352z" />
             </svg>
           </a>
         </div>
@@ -773,18 +813,25 @@
           <li>
             <strong>📞 WhatsApp:</strong>
             <div class="phone-popup-wrapper">
-              <button class="phone-trigger" id="footer-phone-btn" onclick="togglePhonePopup(event)" aria-expanded="false" aria-haspopup="true">
+              <button class="phone-trigger" id="footer-phone-btn" onclick="togglePhonePopup(event)"
+                aria-expanded="false" aria-haspopup="true">
                 (12) 99113-6258
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
               </button>
               <div class="phone-popup" id="phone-popup" role="menu">
                 <a href="tel:+5512991136258" class="phone-option" role="menuitem">
                   <span class="phone-option-icon">📞</span>
                   <span>Ligar agora</span>
                 </a>
-                <a href="https://wa.me/5512991136258" target="_blank" rel="noopener" class="phone-option phone-option-wpp" role="menuitem">
+                <a href="https://wa.me/5512991136258" target="_blank" rel="noopener"
+                  class="phone-option phone-option-wpp" role="menuitem">
                   <span class="phone-option-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.194 1.605 6.014L.43 23.57l5.656-1.485c1.761.968 3.766 1.482 5.945 1.482 6.645 0 12.03-5.386 12.03-12.032C24 5.385 18.615 0 12.031 0zm5.512 16.48c-.302-.15-1.785-.882-2.062-.983-.277-.101-.48-.15-.68.151-.202.302-.78 1.004-.955 1.205-.176.2-.352.226-.654.076-1.547-.775-2.735-1.5-3.822-3.375-.2-.347.195-.319.782-1.493.1-.201.05-.376-.025-.527-.075-.15-.68-1.637-.932-2.242-.244-.59-.492-.511-.68-.521h-.58c-.2 0-.528.075-.805.376-.277.302-1.056 1.03-1.056 2.513s1.08 2.913 1.232 3.114c.15.2 2.124 3.242 5.143 4.542.718.309 1.28.493 1.716.63.722.23 1.38.197 1.898.118.583-.087 1.785-.729 2.036-1.433.252-.704.252-1.306.176-1.433-.075-.126-.277-.201-.58-.352z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.553 4.194 1.605 6.014L.43 23.57l5.656-1.485c1.761.968 3.766 1.482 5.945 1.482 6.645 0 12.03-5.386 12.03-12.032C24 5.385 18.615 0 12.031 0zm5.512 16.48c-.302-.15-1.785-.882-2.062-.983-.277-.101-.48-.15-.68.151-.202.302-.78 1.004-.955 1.205-.176.2-.352.226-.654.076-1.547-.775-2.735-1.5-3.822-3.375-.2-.347.195-.319.782-1.493.1-.201.05-.376-.025-.527-.075-.15-.68-1.637-.932-2.242-.244-.59-.492-.511-.68-.521h-.58c-.2 0-.528.075-.805.376-.277.302-1.056 1.03-1.056 2.513s1.08 2.913 1.232 3.114c.15.2 2.124 3.242 5.143 4.542.718.309 1.28.493 1.716.63.722.23 1.38.197 1.898.118.583-.087 1.785-.729 2.036-1.433.252-.704.252-1.306.176-1.433-.075-.126-.277-.201-.58-.352z" />
+                    </svg>
                   </span>
                   <span>Abrir WhatsApp</span>
                 </a>
@@ -811,8 +858,9 @@
       <div class="container bottom-flex">
         <p class="copyright">© 2026 Barbosa Restaurante. Todos os direitos reservados.</p>
         <div class="agency-signature">
-          <img src="img/2type-logo.png" alt="2Type Logo" width="28" height="28" loading="lazy">
-          <span>Desenvolvido por <a href="#" target="_blank" rel="noopener">2Type</a></span>
+          <img src="img/2type-logo.webp" alt="2Type Logo" width="28" height="28" loading="lazy">
+          <span>Desenvolvido por <a href="https://www.instagram.com/2typeofc" target="_blank"
+              rel="noopener noreferrer">2Type</a></span>
         </div>
       </div>
     </div>
@@ -963,12 +1011,6 @@
                 <div class="pay-icon">💳</div>
                 <span class="pay-label">Cartão</span>
               </button>
-            </div>
-            <div class="pix-hint" id="pix-hint">
-              <span>⚡</span>
-              <span>Chave PIX: <span class="pix-key">(12) 99113-6258</span> — você receberá o valor total no
-                WhatsApp.</span>
-            </div>
           </div>
 
           <div class="form-group">
@@ -1063,6 +1105,18 @@
       _gsapFallback();
     }
   </script>
+
+  <noscript>
+    <style>
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+    <p style="text-align:center; padding: 20px; font-family: sans-serif; color: #0D2B45;">
+      Por favor, <strong>ative o JavaScript</strong> para a melhor experiência neste site.
+    </p>
+  </noscript>
 </body>
 
 </html>
