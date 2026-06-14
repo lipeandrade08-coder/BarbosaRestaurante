@@ -1011,112 +1011,112 @@
                 <div class="pay-icon">💳</div>
                 <span class="pay-label">Cartão</span>
               </button>
+            </div>
+
+            <div class="form-group">
+              <label>Observações</label>
+              <textarea id="order-obs" maxlength="300" rows="2"
+                placeholder="Ex: sem cebola, ponto da carne, etc."></textarea>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label>Observações</label>
-            <textarea id="order-obs" maxlength="300" rows="2"
-              placeholder="Ex: sem cebola, ponto da carne, etc."></textarea>
+          <!-- Passo 3: Revisão do Pedido -->
+          <div class="step-content" id="step-3">
+            <h3 style="margin-bottom: 20px; font-family: 'Jost'; font-size: 1.2rem;">Resumo Final</h3>
+            <div id="order-summary" style="background: var(--off); padding: 20px; border-radius: 20px;"></div>
           </div>
         </div>
 
-        <!-- Passo 3: Revisão do Pedido -->
-        <div class="step-content" id="step-3">
-          <h3 style="margin-bottom: 20px; font-family: 'Jost'; font-size: 1.2rem;">Resumo Final</h3>
-          <div id="order-summary" style="background: var(--off); padding: 20px; border-radius: 20px;"></div>
+        <div class="modal-footer">
+          <button class="btn-step btn-prev" id="btn-back" onclick="prevStep()" style="display: none;">Voltar</button>
+          <button class="btn-step btn-next" id="btn-next" onclick="nextStep()">Continuar</button>
+          <button class="btn-step btn-wpp" id="btn-finish" onclick="finishOrder()" style="display: none;">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.534 5.843L0 24l6.335-1.54A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.368l-.36-.214-3.732.907.948-3.653-.236-.376A9.793 9.793 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z" />
+            </svg>
+            Pedir no WhatsApp
+          </button>
         </div>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn-step btn-prev" id="btn-back" onclick="prevStep()" style="display: none;">Voltar</button>
-        <button class="btn-step btn-next" id="btn-next" onclick="nextStep()">Continuar</button>
-        <button class="btn-step btn-wpp" id="btn-finish" onclick="finishOrder()" style="display: none;">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-            <path
-              d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.534 5.843L0 24l6.335-1.54A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.368l-.36-.214-3.732.907.948-3.653-.236-.376A9.793 9.793 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z" />
-          </svg>
-          Pedir no WhatsApp
-        </button>
       </div>
     </div>
-  </div>
 
-  <div id="toast"></div>
+    <div id="toast"></div>
 
-  <!-- Vanilla-Tilt: efeito 3D "Apple" nos cards (~4kb, sem dependências) -->
-  <script src="js/main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
-    integrity="sha512-we3LoxvMH0k79cXNMGLJSKkNWh1FIGpJfTLqoeCrjbRfqQDVmQw2AHAWWaBRQNwFRFLOFouDKS1vN9bE0m3A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script>
-    // Script no fim do <body>: DOM já está disponível, sem necessidade de DOMContentLoaded.
-    // Ativa somente em dispositivos com ponteiro fino (mouse) e sem preferência por movimento reduzido.
-    const _isMobile = window.matchMedia('(hover: none)').matches || window.innerWidth < 768;
+    <!-- Vanilla-Tilt: efeito 3D "Apple" nos cards (~4kb, sem dependências) -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
+      integrity="sha512-we3LoxvMH0k79cXNMGLJSKkNWh1FIGpJfTLqoeCrjbRfqQDVmQw2AHAWWaBRQNwFRFLOFouDKS1vN9bE0m3A=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      // Script no fim do <body>: DOM já está disponível, sem necessidade de DOMContentLoaded.
+      // Ativa somente em dispositivos com ponteiro fino (mouse) e sem preferência por movimento reduzido.
+      const _isMobile = window.matchMedia('(hover: none)').matches || window.innerWidth < 768;
 
-    // ── Desativa vídeo hero em mobile para economizar dados e CPU ─────────────
-    if (_isMobile) {
-      const heroVid = document.getElementById('hero-vid');
-      if (heroVid) {
-        heroVid.pause();
-        heroVid.removeAttribute('autoplay');
-        heroVid.style.display = 'none';
+      // ── Desativa vídeo hero em mobile para economizar dados e CPU ─────────────
+      if (_isMobile) {
+        const heroVid = document.getElementById('hero-vid');
+        if (heroVid) {
+          heroVid.pause();
+          heroVid.removeAttribute('autoplay');
+          heroVid.style.display = 'none';
+        }
       }
-    }
 
-    // ── Vanilla-Tilt: só em desktop com mouse ─────────────────────────────
-    if (!_isMobile && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // ── Vanilla-Tilt: só em desktop com mouse ─────────────────────────────
+      if (!_isMobile && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
-      VanillaTilt.init(document.querySelectorAll('.menu-card'), {
-        max: 12,            // Rotação máxima em graus — suave e elegante
-        speed: 500,         // Velocidade da transição de retorno (ms)
-        glare: true,        // Reflexo dinâmico premium por cima do glassmorphism
-        'max-glare': 0.15,  // Opacidade do reflexo — discreto e de alto valor
-        scale: 1.03,        // Leve zoom ao hover
-        gyroscope: false,   // Giroscópio desativado (só mouse no hover: hover)
-      });
+        VanillaTilt.init(document.querySelectorAll('.menu-card'), {
+          max: 12,            // Rotação máxima em graus — suave e elegante
+          speed: 500,         // Velocidade da transição de retorno (ms)
+          glare: true,        // Reflexo dinâmico premium por cima do glassmorphism
+          'max-glare': 0.15,  // Opacidade do reflexo — discreto e de alto valor
+          scale: 1.03,        // Leve zoom ao hover
+          gyroscope: false,   // Giroscópio desativado (só mouse no hover: hover)
+        });
 
-      // will-change dinâmico: ativa na GPU só durante o hover (evita pressão de memória)
-      document.querySelectorAll('.menu-card').forEach(card => {
-        card.addEventListener('mouseenter', () => { card.style.willChange = 'transform, opacity'; }, { passive: true });
-        card.addEventListener('mouseleave', () => { card.style.willChange = 'auto'; }, { passive: true });
-      });
-    }
-  </script>
+        // will-change dinâmico: ativa na GPU só durante o hover (evita pressão de memória)
+        document.querySelectorAll('.menu-card').forEach(card => {
+          card.addEventListener('mouseenter', () => { card.style.willChange = 'transform, opacity'; }, { passive: true });
+          card.addEventListener('mouseleave', () => { card.style.willChange = 'auto'; }, { passive: true });
+        });
+      }
+    </script>
 
-  <!-- GSAP + ScrollTrigger: animações de scroll em cascata (padrão da indústria) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
-    integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="_gsapFallback()"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
-    integrity="sha512-onMTgk5do3s0O6meFsP4F9r9sGRJHa7rWLq1ZZBHliU4aXFBapYXlxeEEEGuPZcGN8ENoMQJCKnVLMKFU7QBg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="_gsapFallback()"></script>
-  <script>
-    // Inicia o GSAP se ambos os scripts carregaram; senão, fallback CSS simples
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      // Respeita preferência por movimento reduzido (acessibilidade)
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        _initGSAP();
+    <!-- GSAP + ScrollTrigger: animações de scroll em cascata (padrão da indústria) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" onerror="_gsapFallback()"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      integrity="sha512-onMTgk5do3s0O6meFsP4F9r9sGRJHa7rWLq1ZZBHliU4aXFBapYXlxeEEEGuPZcGN8ENoMQJCKnVLMKFU7QBg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" onerror="_gsapFallback()"></script>
+    <script>
+      // Inicia o GSAP se ambos os scripts carregaram; senão, fallback CSS simples
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        // Respeita preferência por movimento reduzido (acessibilidade)
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          _initGSAP();
+        } else {
+          _gsapFallback();
+        }
       } else {
         _gsapFallback();
       }
-    } else {
-      _gsapFallback();
-    }
-  </script>
+    </script>
 
-  <noscript>
-    <style>
-      .reveal {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    </style>
-    <p style="text-align:center; padding: 20px; font-family: sans-serif; color: #0D2B45;">
-      Por favor, <strong>ative o JavaScript</strong> para a melhor experiência neste site.
-    </p>
-  </noscript>
+    <noscript>
+      <style>
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+      <p style="text-align:center; padding: 20px; font-family: sans-serif; color: #0D2B45;">
+        Por favor, <strong>ative o JavaScript</strong> para a melhor experiência neste site.
+      </p>
+    </noscript>
 </body>
 
 </html>
