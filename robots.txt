@@ -1,3 +1,32 @@
+# ── Barbosa Restaurante | Guaratinguetá SP ───────────────────────────────────
+# robots.txt ultra avançado — SEO regional Vale do Paraíba
+
+# Google: acesso total (crawl completo do site e imagens)
+User-agent: Googlebot
+Allow: /
+Allow: /img/
+Crawl-delay: 1
+
+# Googlebot de Imagens: indexa todas as fotos do cardápio
+User-agent: Googlebot-Image
+Allow: /img/
+Disallow: /css/
+Disallow: /js/
+Disallow: /tools/
+Disallow: /marketing/
+
+# Bing: acesso total
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Outros crawlers reconhecidos
 User-agent: *
 Allow: /
+Disallow: /tools/
+Disallow: /marketing/
+Disallow: /css/fonts/
+Crawl-delay: 5
+
+# Sitemap
 Sitemap: https://barbosarestaurante.com.br/sitemap.xml

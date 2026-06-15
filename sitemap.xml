@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
+  <!-- Página Principal -->
   <url>
     <loc>https://barbosarestaurante.com.br/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <!-- Imagens do cardápio — indexadas pelo Google Images -->
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/og_image_1200x630.webp</image:loc>
+      <image:title>Barbosa Restaurante – Melhor Churrasco em Guaratinguetá SP</image:title>
+      <image:caption>Barbosa Restaurante: churrasco e marmitex em Guaratinguetá, Vale do Paraíba SP</image:caption>
+      <image:geo_location>Guaratinguetá, São Paulo, Brasil</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/marmitex_tradicional.webp</image:loc>
+      <image:title>Marmita de Churrasco – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Marmita de churrasco com carne bovina na brasa, arroz, feijão, farofa e fritas – Guaratinguetá SP</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/marmitex_costela.webp</image:loc>
+      <image:title>Costela Desossada – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Costela desossada feita na brasa com acompanhamentos – melhor churrasco do Vale do Paraíba</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/kit_churrasco.webp</image:loc>
+      <image:title>Kit Churrasco para família – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Kit Churrasco com mix de carnes para 4, 6 ou 8 pessoas – Guaratinguetá, Vale do Paraíba SP</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/marmitex_frango.webp</image:loc>
+      <image:title>Frango Grelhado – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Marmita de frango grelhado com acompanhamentos – Barbosa Restaurante em Guaratinguetá SP</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/marmitex_parmegiana.webp</image:loc>
+      <image:title>Parmegiana de Frango – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Parmegiana de frango com queijo derretido e molho – delivery em Guaratinguetá SP</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/marmitex_parmegiana_carne.webp</image:loc>
+      <image:title>Parmegiana de Carne – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Parmegiana de carne com queijo derretido – marmitex em Guaratinguetá, Vale do Paraíba</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://barbosarestaurante.com.br/img/marmitex_peixe.webp</image:loc>
+      <image:title>Filé de Peixe – Barbosa Restaurante Guaratinguetá</image:title>
+      <image:caption>Filé de tilápia grelhado com acompanhamentos – Barbosa Restaurante em Guaratinguetá SP</image:caption>
+    </image:image>
   </url>
 
 </urlset>
+

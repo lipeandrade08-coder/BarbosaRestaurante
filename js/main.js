@@ -723,6 +723,25 @@ function _gsapFallback() {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
 }
 
+// ── FAQ Accordion ────────────────────────────────────────────────────────────
+function toggleFAQ(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+
+  // Fecha todos os outros FAQs (comportamento accordion)
+  document.querySelectorAll('.faq-item.open').forEach(openItem => {
+    if (openItem !== item) {
+      openItem.classList.remove('open');
+      const openBtn = openItem.querySelector('.faq-question');
+      if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Alterna o item clicado
+  item.classList.toggle('open', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
+}
+
 // ── Menu hamburguer (mobile) ─────────────────────────────────────────────────
 function toggleNav() {
   const nav = document.getElementById('nav-links');
