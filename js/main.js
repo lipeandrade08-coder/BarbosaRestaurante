@@ -451,46 +451,55 @@ function finishOrder() {
   let itemsList = '';
   let total = 0;
   Object.values(cart.items).forEach(i => {
-    itemsList += `• ${i.qty}x ${i.name} (${i.size}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
+    itemsList += `▪️ ${i.qty}x ${i.name} (${i.size}) -> R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
     total += i.price * i.qty;
   });
 
   Object.entries(cart.drinks).forEach(([drinkName, data]) => {
-    itemsList += `• ${data.qty}x ${drinkName} - R$ ${(data.price * data.qty).toFixed(2).replace('.', ',')}\n`;
+    itemsList += `▪️ ${data.qty}x ${drinkName} -> R$ ${(data.price * data.qty).toFixed(2).replace('.', ',')}\n`;
     total += data.price * data.qty;
   });
 
-  // 1. Monta o Array de Strings (evita problemas de interpolação com \n em alguns browsers)
+  // 1. Monta o Array de Strings com emojis e estrutura bem definida para facilitar leitura
   let msgLines = [
-    '*PEDIDO - Barbosa Restaurante*',
+    '🔔 *NOVO PEDIDO - BARBOSA RESTAURANTE* 🔔',
     '',
-    `*Cliente:* ${name}`,
-    `*Tipo:* ${orderType}`,
-    `*Pagamento:* ${paymentMethod}`
+    `👤 *Cliente:* ${name}`,
+    `🛵 *Tipo:* ${orderType === 'Entrega' ? 'Entrega' : 'Retirada no Local'}`,
+    `💳 *Pagamento:* ${paymentMethod}`
   ];
 
   if (orderType === 'Entrega') {
-    msgLines.push(`*Endereço:* ${fullAddr}`);
-    msgLines.push(`*Referência:* ${ref}`);
+    msgLines.push('');
+    msgLines.push(`📍 *Endereço de Entrega:*`);
+    msgLines.push(`${rua}, ${numero}`);
+    msgLines.push(`${bairro}, ${cidade} (CEP ${cep})`);
+    if (ref) msgLines.push(`*Referência:* ${ref}`);
   }
 
   msgLines.push('');
-  msgLines.push('*Itens:*');
+  msgLines.push('📝 *ITENS DO PEDIDO:*');
 
   // Divide a string itemsList que você já gerou em linhas limpas
   const cleanItemsList = itemsList.trim().split('\n');
   msgLines = msgLines.concat(cleanItemsList);
 
-  msgLines.push('');
-  msgLines.push(`*Subtotal:* R$ ${total.toFixed(2).replace('.', ',')}`);
-
   if (obs) {
     msgLines.push('');
-    msgLines.push(`*Observações:* ${obs}`);
+    msgLines.push(`⚠️ *Observações:* ${obs}`);
   }
 
   msgLines.push('');
-  msgLines.push('_Favor informar a taxa de entrega e tempo estimado._');
+  msgLines.push(`💰 *${orderType === 'Entrega' ? 'SUBTOTAL' : 'TOTAL'}: R$ ${total.toFixed(2).replace('.', ',')}*`);
+  
+  if (orderType === 'Entrega') {
+    msgLines.push('_(Aguardando acréscimo da taxa de entrega)_');
+    msgLines.push('');
+    msgLines.push('⏳ _Por favor, confirme o pedido, a taxa e o tempo estimado para entrega!_');
+  } else {
+    msgLines.push('');
+    msgLines.push('⏳ _Por favor, confirme o pedido e o tempo estimado para retirada!_');
+  }
 
   // 2. Transforma o Array numa string unida por quebras de linha limpas
   const finalMsg = msgLines.join('\n');
