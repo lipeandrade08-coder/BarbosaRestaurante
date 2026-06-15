@@ -659,8 +659,8 @@ section {
   flex: 1;
   padding: 10px;
   border-radius: 12px;
-  background: var(--off);
-  border: 2px solid transparent;
+  background: #e2ebf3; /* Mais escuro que o var(--off) original para parecer botão */
+  border: 1.5px solid #d0e0ed;
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
