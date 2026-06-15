@@ -491,7 +491,7 @@ function finishOrder() {
 
   msgLines.push('');
   msgLines.push(`💰 *${orderType === 'Entrega' ? 'SUBTOTAL' : 'TOTAL'}: R$ ${total.toFixed(2).replace('.', ',')}*`);
-  
+
   if (orderType === 'Entrega') {
     msgLines.push('_(Aguardando acréscimo da taxa de entrega)_');
     msgLines.push('');
