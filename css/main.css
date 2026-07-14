@@ -650,6 +650,31 @@ section {
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
 }
 
+/* Estado de prato indisponível (Esgotado) */
+.menu-card.sold-out {
+  opacity: 0.6;
+  pointer-events: none; /* Impede que o usuário clique e adicione ao carrinho */
+  filter: grayscale(80%);
+}
+
+.menu-card.sold-out::after {
+  content: 'ESGOTADO';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--red);
+  padding: 10px 24px;
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  border: 4px solid var(--red);
+  z-index: 10;
+}
+
 .card-img {
   height: 220px;
   background-size: cover;

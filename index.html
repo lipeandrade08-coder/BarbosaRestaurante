@@ -186,6 +186,12 @@
     "hasMenuItem": [
       {
         "@type": "MenuItem",
+        "name": "Feijoada Completa da Casa",
+        "description": "Arroz, couve refogada, farofa temperada e torresmo crocante. Disponível nos tamanhos P, M e G.",
+        "offers": { "@type": "Offer", "price": "25.00", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" }
+      },
+      {
+        "@type": "MenuItem",
         "name": "Marmita de Churrasco",
         "description": "Arroz, feijão, macarrão, farofa, fritas, maionese e carne bovina na brasa. Disponível nos tamanhos P, M e G.",
         "offers": { "@type": "Offer", "price": "25.00", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" }
@@ -394,7 +400,7 @@
   <link rel="preload" href="css/fonts/font_32.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="css/fonts/font_14.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css" />
-  <link rel="stylesheet" href="css/main.css?v=3" />
+  <link rel="stylesheet" href="css/main.css?v=5" />
 
   <style>
     /* View Transitions API: crossfade suave ao trocar abas do cardápio */
@@ -717,9 +723,43 @@
 
       <div class="menu-tabs reveal">
         <button class="tab-btn active" onclick="switchTab('churrasco', this)">🔥 Churrasco</button>
+        <button class="tab-btn" onclick="switchTab('pratos-do-dia', this)">🍲 Pratos do Dia</button>
         <button class="tab-btn" onclick="switchTab('frango', this)">🍗 Frango</button>
         <button class="tab-btn" onclick="switchTab('peixes', this)">🐟 Peixes</button>
         <button class="tab-btn" onclick="switchTab('parmegiana', this)">🧀 Parmegiana</button>
+      </div>
+
+      <div id="tab-pratos-do-dia" class="tab-content">
+        <div class="menu-card reveal">
+          <div class="card-img" style="background-image: url('img/feijoada.png')"></div>
+          <div class="card-body">
+            <h3 class="card-name">Feijoada Completa da Casa</h3>
+            <p class="card-desc">Arroz, couve refogada, farofa temperada e torresmo crocante.</p>
+            <div class="card-prices">
+              <div class="price-pill" data-item="Feijoada Completa da Casa" data-size="P" data-price="25"
+                onclick="handlePillClick(this)">
+                <span>Pequena</span><strong>R$ 25</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+              <div class="price-pill" data-item="Feijoada Completa da Casa" data-size="M" data-price="30"
+                onclick="handlePillClick(this)">
+                <span>Média</span><strong>R$ 30</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+              <div class="price-pill" data-item="Feijoada Completa da Casa" data-size="G" data-price="35"
+                onclick="handlePillClick(this)">
+                <span>Grande</span><strong>R$ 35</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="tab-churrasco" class="tab-content active">
@@ -880,7 +920,7 @@
       </div>
 
       <div id="tab-peixes" class="tab-content">
-        <div class="menu-card reveal">
+        <div class="menu-card reveal sold-out">
           <div class="card-img" style="background-image: url('img/marmitex_peixe.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Filé de Peixe</h3>
