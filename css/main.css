@@ -2062,7 +2062,7 @@ footer::before {
 
   /* Video hero: pausa em mobile via JS — aqui esconde controles */
   .hero-video {
-    object-position: 30% center;
+    object-position: center center;
   }
 }
 
