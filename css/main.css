@@ -1892,6 +1892,11 @@ footer::before {
   font-size: .9rem;
 }
 
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MOBILE-FIRST — RESPONSIVIDADE COMPLETA (≤ 768px)
+   Foco principal: smartphones iOS e Android (320px–428px)
+══════════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
   /* .footer-grid dispensa override: auto-fit minmax(280px,1fr) empilha nativamente */
   .bottom-flex {
@@ -2222,5 +2227,400 @@ footer::before {
 
   .btn-step {
     width: 100%;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MELHORIAS MOBILE ADICIONAIS — Itens específicos que precisam de atenção
+══════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* ── Navegação ── */
+  .nav-logo span {
+    font-size: 1.1rem;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Hero ── */
+  .hero-img {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 20px;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    margin: 16px auto 36px;
+  }
+
+  /* ── Abas do Cardápio ── */
+  .menu-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .tab-btn {
+    padding: 10px 8px;
+    font-size: 0.82rem;
+    border-radius: 12px;
+  }
+
+  /* ── Cards do Cardápio ── */
+  .menu-card {
+    border-radius: 16px;
+  }
+
+  .card-img {
+    height: 200px;
+  }
+
+  .card-body {
+    padding: 18px;
+  }
+
+  .card-name {
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Pills de preço — full width em mobile pequeno */
+  .card-prices {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .price-pill {
+    padding: 12px 10px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .price-pill span {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+  }
+
+  .price-pill strong {
+    font-size: 1rem;
+  }
+
+  .pill-qty {
+    margin-top: 0;
+  }
+
+  /* Botão de quantidade: área de toque maior */
+  .pill-qty-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+
+  /* ── Bebidas ── */
+  .drinks-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .drink-card {
+    padding: 14px 10px;
+  }
+
+  .drink-img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .drink-name {
+    font-size: 0.88rem;
+  }
+
+  .drink-price {
+    font-size: 1rem;
+  }
+
+  /* Botões qty de bebida: área de toque 44px */
+  .qty-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  /* ── Avaliações ── */
+  .reviews-score {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    padding: 16px 20px;
+  }
+
+  .review-card {
+    padding: 24px 20px 20px;
+  }
+
+  .review-text {
+    font-size: 0.9rem;
+  }
+
+  .btn-google {
+    padding: 14px 28px;
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  /* ── Seção Sobre ── */
+  .sobre-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  /* ── Localização ── */
+  .loc-card {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .loc-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .footer-grid {
+    padding: 0 20px 40px;
+    gap: 32px;
+  }
+
+  .footer-brand-title {
+    font-size: 1.6rem;
+  }
+
+  .footer-col {
+    align-items: flex-start;
+  }
+
+  /* ── Barra de Pedido Fixa ── */
+  #order-bar {
+    padding: 10px 16px;
+  }
+
+  .bar-total {
+    font-size: 1.5rem;
+  }
+
+  .bar-items {
+    font-size: 0.8rem;
+  }
+
+  .btn-cart {
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    gap: 8px;
+    border-radius: 40px;
+    white-space: nowrap;
+  }
+
+  /* ── Modal / Checkout ── */
+  .modal-header {
+    padding: 18px 18px 10px;
+  }
+
+  .modal-body {
+    padding: 0 18px 18px;
+  }
+
+  .modal-footer {
+    padding: 14px 18px 20px;
+    gap: 8px;
+  }
+
+  /* Inputs do formulário — fonte ≥16px evita zoom no iOS */
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .form-group label {
+    font-size: 0.78rem;
+    margin-bottom: 6px;
+  }
+
+  /* Formas de pagamento */
+  .payment-options {
+    gap: 8px;
+  }
+
+  .pay-btn {
+    padding: 12px 6px;
+    border-radius: 12px;
+  }
+
+  .pay-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+  }
+
+  .pay-label {
+    font-size: 0.7rem;
+  }
+
+  /* Botões de step */
+  .btn-step {
+    padding: 14px;
+    font-size: 0.9rem;
+    min-height: 52px;
+    border-radius: 14px;
+  }
+
+  /* Selects de sabor (bebida) */
+  .drink-flavor-select {
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+
+  /* ── FAQ ── */
+  .faq-question {
+    font-size: 0.95rem;
+    padding: 18px 16px;
+  }
+
+  .faq-answer {
+    font-size: 0.9rem;
+    padding: 0 16px 16px;
+  }
+
+  /* ── Section titles ── */
+  .section-title {
+    font-size: clamp(1.8rem, 8vw, 2.8rem);
+  }
+
+  .section-sub {
+    font-size: 0.92rem;
+  }
+}
+
+/* ─── Smartphones muito pequenos: 320px – 375px ─────────────────────────── */
+@media (max-width: 375px) {
+  /* Hero mínimo viável */
+  .hero {
+    padding: 80px 16px 50px;
+  }
+
+  .hero-img {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* Abas: fonte menor para caber */
+  .tab-btn {
+    font-size: 0.76rem;
+    padding: 8px 6px;
+  }
+
+  /* Cards: imagem menor para preservar espaço */
+  .card-img {
+    height: 170px;
+  }
+
+  /* Barra de pedido */
+  .bar-total {
+    font-size: 1.3rem;
+  }
+
+  .btn-cart {
+    padding: 11px 16px;
+    font-size: 0.8rem;
+  }
+
+  /* Modal: ocupa tela inteira em telas muito pequenas */
+  .modal-box {
+    max-height: 98vh;
+    border-radius: 18px 18px 0 0;
+  }
+
+  /* Steps do modal: empilha verticalmente */
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .btn-step {
+    width: 100%;
+  }
+
+  /* Payments: 3 colunas apertadas */
+  .payment-options {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .pay-btn {
+    padding: 10px 4px;
+  }
+
+  .pay-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .pay-label {
+    font-size: 0.65rem;
+  }
+}
+
+/* ─── Safe Area (iPhone com notch / Dynamic Island) ─────────────────────── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  #order-bar {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+
+  body {
+    padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom) + 20px);
+  }
+
+  .modal-footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── Landscape em mobile (altura restrita) ──────────────────────────────── */
+@media (max-height: 500px) and (max-width: 900px) {
+  .modal-box {
+    max-height: 98vh;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 12px 16px 8px;
+  }
+
+  .modal-body {
+    padding: 0 16px 12px;
+  }
+
+  .modal-footer {
+    padding: 10px 16px 14px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 80px 24px 40px;
   }
 }
