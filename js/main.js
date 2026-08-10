@@ -205,7 +205,11 @@ function updateUI() {
   const bar = document.getElementById('order-bar');
   if (count > 0) {
     bar.classList.remove('hidden');
-    document.getElementById('bar-total').innerHTML = `<small>R$</small> ${total.toFixed(2).replace('.', ',')}${DIA_DOS_PAIS_DESCONTO ? ' <span style="font-size:0.7rem;color:#f0d060;font-family:Jost,sans-serif">(-${DESCONTO_PERCENT}% 🎁)</span>' : ''}`;
+    const discountTag = DIA_DOS_PAIS_DESCONTO
+      ? ` <span style="font-size:0.7rem;color:#f0d060;font-family:Jost,sans-serif">(-${DESCONTO_PERCENT}% 🎁)</span>`
+      : '';
+    document.getElementById('bar-total').innerHTML = `<small>R$</small> ${total.toFixed(2).replace('.', ',')}` + discountTag;
+
     document.getElementById('bar-items').innerText = `${count} ${count === 1 ? 'item selecionado' : 'itens selecionados'}`;
     document.getElementById('cart-count').innerText = count;
   } else {
