@@ -652,10 +652,10 @@
         <strong>Dia dos Pais — 10% OFF!</strong>
         <span>Todo pedido de agosto com desconto especial do Barbosa Restaurante 🔥</span>
       </div>
-      <button class="dp-banner-btn" onclick="scrollToSection('cardapio')">
+      <button type="button" class="dp-banner-btn" onclick="scrollToSection('cardapio')">
         Aproveitar 🍖
       </button>
-      <button class="dp-close" id="dp-close" aria-label="Fechar banner">✕</button>
+      <button type="button" class="dp-close" id="dp-close" aria-label="Fechar banner">✕</button>
     </div>
   </div>
 
@@ -801,11 +801,6 @@
     }
   </style>
 
-  <script>
-    document.getElementById('dp-close').addEventListener('click', function () {
-      document.getElementById('dp-banner').classList.add('dp-hidden');
-    });
-  </script>
 
 
   <nav aria-label="Menu de navegação principal">
@@ -2132,6 +2127,16 @@
 
     <!-- Vanilla-Tilt: efeito 3D "Apple" nos cards (~4kb, sem dependências) -->
     <script src="js/main.js"></script>
+    <script>
+      // Banner Dia dos Pais — botão fechar (após main.js, DOM já disponível)
+      var dpClose = document.getElementById('dp-close');
+      if (dpClose) {
+        dpClose.addEventListener('click', function () {
+          document.getElementById('dp-banner').classList.add('dp-hidden');
+        });
+      }
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
       integrity="sha512-we3LoxvMH0k79cXNMGLJSKkNWh1FIGpJfTLqoeCrjbRfqQDVmQw2AHAWWaBRQNwFRFLOFouDKS1vN9bE0m3A=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
