@@ -643,49 +643,119 @@
 <body>
 
   <!-- ╔══════════════════════════════════════════════════════════╗
-       ║             BANNER DIA DOS PAIS                         ║
+       ║        BANNER DIA DOS PAIS — MODO ANIMADO               ║
        ╚══════════════════════════════════════════════════════════╝ -->
   <div class="dp-banner" id="dp-banner" role="banner" aria-label="Promoção Dia dos Pais">
+    <!-- Estrelas flutuantes (geradas por JS) -->
+    <div class="dp-stars" id="dp-stars" aria-hidden="true"></div>
+
     <div class="dp-banner-inner">
       <span class="dp-emoji" aria-hidden="true">🎁</span>
+
       <div class="dp-text">
-        <strong>Dia dos Pais — 10% OFF!</strong>
-        <span>Todo pedido de agosto com desconto especial do Barbosa Restaurante 🔥</span>
+        <strong>
+          Dia dos Pais —
+          <span class="dp-pill">10% OFF</span>
+        </strong>
+        <span>Todo pedido de agosto com desconto especial 🔥</span>
       </div>
-      <button type="button" class="dp-banner-btn" onclick="scrollToSection('cardapio')">
-        Aproveitar 🍖
+
+      <button type="button" class="dp-banner-btn" id="dp-cta" onclick="scrollToSection('cardapio')">
+        <span class="dp-btn-label">Aproveitar 🍖</span>
+        <span class="dp-ripple" aria-hidden="true"></span>
       </button>
+
       <button type="button" class="dp-close" id="dp-close" aria-label="Fechar banner">✕</button>
     </div>
   </div>
 
   <style>
-    /* ── Banner Dia dos Pais — Mobile First ────────────────────────────────── */
+    /* ════════════════════════════════════════════════════════════
+       BANNER DIA DOS PAIS — animações mobile-first
+    ════════════════════════════════════════════════════════════ */
+
+    /* ── Entrada: slide de cima ─────────────────────────────── */
+    @keyframes dp-slide-in {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+
+    /* ── Brilho varrendo ────────────────────────────────────── */
+    @keyframes dp-shine {
+      0%   { left: -80%; }
+      100% { left: 160%; }
+    }
+
+    /* ── Emoji balançando ───────────────────────────────────── */
+    @keyframes dp-swing {
+      0%,100% { transform: rotate(-10deg) scale(1.05); }
+      50%     { transform: rotate(10deg)  scale(1.15); }
+    }
+
+    /* ── Pulsação no badge 10% OFF ──────────────────────────── */
+    @keyframes dp-pulse {
+      0%,100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(240,208,96,0.5); }
+      50%     { transform: scale(1.07); box-shadow: 0 0 0 6px rgba(240,208,96,0); }
+    }
+
+    /* ── Fade-in escalonado para filhos ─────────────────────── */
+    @keyframes dp-fade-up {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Estrela flutuando ──────────────────────────────────── */
+    @keyframes dp-float-star {
+      0%   { transform: translateY(0)   rotate(0deg);   opacity: 0.7; }
+      50%  { transform: translateY(-12px) rotate(180deg); opacity: 1;   }
+      100% { transform: translateY(0)   rotate(360deg); opacity: 0.7; }
+    }
+
+    /* ── Ripple do botão ────────────────────────────────────── */
+    @keyframes dp-ripple-anim {
+      from { transform: translate(-50%,-50%) scale(0); opacity: 0.5; }
+      to   { transform: translate(-50%,-50%) scale(4); opacity: 0;   }
+    }
+
+    /* ── Banner wrapper ─────────────────────────────────────── */
     .dp-banner {
       position: relative;
       z-index: 2000;
-      background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #533483 100%);
+      background: linear-gradient(135deg, #12032e 0%, #0f3460 45%, #4a1b7a 100%);
       color: #fff;
-      padding: 10px 48px 10px 16px; /* espaço à direita para o botão fechar */
+      padding: 11px 48px 11px 16px;
       text-align: center;
       overflow: hidden;
+      animation: dp-slide-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
     }
 
-    /* Brilho animado */
+    /* Brilho varrendo */
     .dp-banner::after {
       content: '';
       position: absolute;
-      top: 0; left: -100%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
-      animation: dp-shine 4s ease-in-out infinite;
+      top: 0; left: -80%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);
+      animation: dp-shine 3.5s ease-in-out infinite;
       pointer-events: none;
     }
-    @keyframes dp-shine {
-      0%   { left: -100%; }
-      100% { left: 200%; }
+
+    /* ── Estrelas decorativas ───────────────────────────────── */
+    .dp-stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .dp-star {
+      position: absolute;
+      font-size: 0.75rem;
+      animation: dp-float-star var(--dur, 3s) ease-in-out var(--delay, 0s) infinite;
+      opacity: 0.7;
+      user-select: none;
     }
 
+    /* ── Inner flex ─────────────────────────────────────────── */
     .dp-banner-inner {
       position: relative;
       display: flex;
@@ -693,33 +763,42 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      max-width: 600px;
+      max-width: 640px;
       margin: 0 auto;
     }
 
+    /* ── Emoji ──────────────────────────────────────────────── */
     .dp-emoji {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       display: inline-block;
-      animation: dp-bob 2s ease-in-out infinite;
-    }
-    @keyframes dp-bob {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-3px); }
+      animation: dp-swing 2.4s ease-in-out infinite;
+      animation-delay: 0.3s;
+      /* entrada escalonada */
+      opacity: 0;
+      animation: dp-fade-up 0.5s 0.1s ease both, dp-swing 2.4s 0.6s ease-in-out infinite;
     }
 
+    /* ── Texto ──────────────────────────────────────────────── */
     .dp-text {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 2px;
+      opacity: 0;
+      animation: dp-fade-up 0.5s 0.25s ease both;
     }
     .dp-text strong {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: #f0d060;
       line-height: 1.2;
       letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .dp-text span {
       font-family: 'Jost', sans-serif;
@@ -728,30 +807,66 @@
       line-height: 1.3;
     }
 
-    .dp-banner-btn {
-      background: linear-gradient(135deg, #c9a227, #e8c54a);
+    /* ── Badge 10% OFF pulsante ─────────────────────────────── */
+    .dp-pill {
+      display: inline-block;
+      background: #f0d060;
       color: #1a1a2e;
       font-family: 'Jost', sans-serif;
-      font-weight: 700;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      animation: dp-pulse 1.8s ease-in-out infinite;
+      vertical-align: middle;
+    }
+
+    /* ── Botão CTA com ripple ───────────────────────────────── */
+    .dp-banner-btn {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #c9a227, #f0d060);
+      color: #1a1a2e;
+      font-family: 'Jost', sans-serif;
+      font-weight: 800;
       font-size: 0.82rem;
-      padding: 7px 20px;
+      padding: 8px 22px;
       border-radius: 30px;
       border: none;
       cursor: pointer;
       white-space: nowrap;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 3px 10px rgba(201, 162, 39, 0.45);
-      letter-spacing: 0.02em;
-      min-height: 36px; /* tap target mínimo */
+      box-shadow: 0 4px 14px rgba(201,162,39,0.5);
+      letter-spacing: 0.03em;
+      min-height: 36px;
       touch-action: manipulation;
+      opacity: 0;
+      animation: dp-fade-up 0.5s 0.4s ease both;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
     .dp-banner-btn:hover,
     .dp-banner-btn:active {
-      transform: scale(1.04);
-      box-shadow: 0 5px 16px rgba(201, 162, 39, 0.65);
+      transform: scale(1.06);
+      box-shadow: 0 6px 20px rgba(201,162,39,0.7);
     }
 
-    /* Botão fechar — fixo no canto direito, sempre visível */
+    /* Ripple circle */
+    .dp-ripple {
+      position: absolute;
+      top: var(--ry, 50%);
+      left: var(--rx, 50%);
+      width: 60px; height: 60px;
+      background: rgba(255,255,255,0.35);
+      border-radius: 50%;
+      pointer-events: none;
+      display: none;
+    }
+    .dp-ripple.active {
+      display: block;
+      animation: dp-ripple-anim 0.55s ease-out forwards;
+    }
+
+    /* ── Botão fechar ───────────────────────────────────────── */
     .dp-close {
       position: absolute;
       top: 50%;
@@ -761,42 +876,36 @@
       border: 1px solid rgba(255,255,255,0.22);
       color: rgba(255,255,255,0.8);
       border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      min-width: 28px;
+      width: 28px; height: 28px; min-width: 28px;
       cursor: pointer;
       font-size: 0.7rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
       touch-action: manipulation;
     }
     .dp-close:hover,
     .dp-close:active {
-      background: rgba(255,255,255,0.26);
+      background: rgba(255,255,255,0.28);
       color: #fff;
+      transform: translateY(-50%) rotate(90deg);
     }
 
+    /* Saída com fade */
+    .dp-banner.dp-hiding {
+      animation: dp-slide-in 0.35s ease reverse both;
+    }
     .dp-banner.dp-hidden { display: none; }
 
-    /* ── Tablet / Desktop: layout em linha ──────────────────────────────────── */
+    /* ── Tablet / Desktop ───────────────────────────────────── */
     @media (min-width: 600px) {
-      .dp-banner {
-        padding: 9px 48px 9px 16px;
-      }
-      .dp-banner-inner {
-        flex-direction: row;
-        gap: 14px;
-        max-width: 900px;
-      }
-      .dp-text {
-        flex-direction: row;
-        gap: 8px;
-        align-items: center;
-      }
-      .dp-text strong { font-size: 1.05rem; }
-      .dp-text span   { font-size: 0.88rem; }
+      .dp-banner { padding: 10px 48px 10px 16px; }
+      .dp-banner-inner { flex-direction: row; gap: 14px; max-width: 900px; }
+      .dp-text { flex-direction: row; gap: 8px; align-items: center; }
+      .dp-text strong { font-size: 1.1rem; }
+      .dp-text span   { font-size: 0.86rem; }
+      .dp-emoji       { font-size: 1.6rem; }
     }
   </style>
 
@@ -2128,14 +2237,60 @@
     <!-- Vanilla-Tilt: efeito 3D "Apple" nos cards (~4kb, sem dependências) -->
     <script src="js/main.js"></script>
     <script>
-      // Banner Dia dos Pais — botão fechar (após main.js, DOM já disponível)
-      var dpClose = document.getElementById('dp-close');
-      if (dpClose) {
-        dpClose.addEventListener('click', function () {
-          document.getElementById('dp-banner').classList.add('dp-hidden');
-        });
-      }
+      /* ─── Banner Dia dos Pais — Animações JS ─────────────────── */
+      (function () {
+        var banner = document.getElementById('dp-banner');
+        if (!banner) return;
+
+        /* 1. Estrelas flutuantes ──────────────────────────────── */
+        var starsContainer = document.getElementById('dp-stars');
+        var STARS = ['✨','⭐','🌟','💫','★'];
+        var NUM_STARS = 8;
+        for (var i = 0; i < NUM_STARS; i++) {
+          var s = document.createElement('span');
+          s.className = 'dp-star';
+          s.textContent = STARS[i % STARS.length];
+          var left = 5 + Math.random() * 90;
+          var top  = 10 + Math.random() * 80;
+          var dur  = (2 + Math.random() * 3).toFixed(1);
+          var delay= (Math.random() * 2).toFixed(1);
+          s.style.cssText =
+            'left:' + left  + '%;' +
+            'top:' + top   + '%;' +
+            '--dur:' + dur  + 's;' +
+            '--delay:' + delay + 's;';
+          starsContainer.appendChild(s);
+        }
+
+        /* 2. Ripple no botão CTA ─────────────────────────────── */
+        var cta = document.getElementById('dp-cta');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            var ripple = cta.querySelector('.dp-ripple');
+            if (!ripple) return;
+            var rect = cta.getBoundingClientRect();
+            ripple.style.setProperty('--rx', (e.clientX - rect.left) + 'px');
+            ripple.style.setProperty('--ry', (e.clientY - rect.top)  + 'px');
+            ripple.classList.remove('active');
+            void ripple.offsetWidth; /* força reflow para reiniciar */
+            ripple.classList.add('active');
+          });
+        }
+
+        /* 3. Fechar com animação de saída ───────────────────── */
+        var closeBtn = document.getElementById('dp-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function () {
+            banner.classList.add('dp-hiding');
+            setTimeout(function () {
+              banner.classList.add('dp-hidden');
+              banner.classList.remove('dp-hiding');
+            }, 360);
+          });
+        }
+      })();
     </script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
       integrity="sha512-we3LoxvMH0k79cXNMGLJSKkNWh1FIGpJfTLqoeCrjbRfqQDVmQw2AHAWWaBRQNwFRFLOFouDKS1vN9bE0m3A=="
