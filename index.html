@@ -642,6 +642,172 @@
 
 <body>
 
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║             BANNER DIA DOS PAIS                         ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <div class="dp-banner" id="dp-banner" role="banner" aria-label="Promoção Dia dos Pais">
+    <div class="dp-banner-inner">
+      <span class="dp-emoji" aria-hidden="true">👨‍👧‍👦</span>
+      <div class="dp-text">
+        <strong>Feliz Dia dos Pais!</strong>
+        <span>Celebre com o melhor churrasco do Vale do Paraíba 🔥</span>
+      </div>
+      <a href="https://wa.me/5512991136258?text=Oi%2C%20quero%20fazer%20um%20pedido%20especial%20de%20Dia%20dos%20Pais!%20🎉"
+         class="dp-banner-btn" target="_blank" rel="noopener noreferrer">
+        Pedir Agora 🍖
+      </a>
+      <button class="dp-close" id="dp-close" aria-label="Fechar banner">✕</button>
+    </div>
+  </div>
+
+  <style>
+    /* ── Banner Dia dos Pais ──────────────────────────────────────────────── */
+    .dp-banner {
+      position: relative;
+      z-index: 2000;
+      background: linear-gradient(90deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%);
+      color: #fff;
+      padding: 10px 16px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .dp-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.03) 40px,
+        rgba(255,255,255,0.03) 80px
+      );
+      pointer-events: none;
+    }
+
+    /* Brilho sutil animado */
+    .dp-banner::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      animation: dp-shine 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes dp-shine {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    .dp-banner-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .dp-emoji {
+      font-size: 1.4rem;
+      animation: dp-bob 2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes dp-bob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-3px); }
+    }
+
+    .dp-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dp-text strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f0d060;
+      letter-spacing: 0.02em;
+    }
+
+    .dp-text span {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .dp-banner-btn {
+      background: linear-gradient(135deg, #c9a227, #e8c54a);
+      color: #1a1a2e;
+      font-family: 'Jost', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 7px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 3px 12px rgba(201, 162, 39, 0.5);
+      letter-spacing: 0.02em;
+    }
+
+    .dp-banner-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 18px rgba(201, 162, 39, 0.7);
+    }
+
+    .dp-close {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+      line-height: 1;
+      flex-shrink: 0;
+      position: absolute;
+      right: 0;
+    }
+
+    .dp-close:hover {
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+    }
+
+    .dp-banner.dp-hidden {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .dp-text strong { font-size: 1rem; }
+      .dp-text span   { font-size: 0.8rem; }
+      .dp-close       { position: static; }
+    }
+  </style>
+
+  <script>
+    document.getElementById('dp-close').addEventListener('click', function () {
+      document.getElementById('dp-banner').classList.add('dp-hidden');
+    });
+  </script>
+
 
   <nav aria-label="Menu de navegação principal">
     <a href="#inicio" class="nav-logo">
