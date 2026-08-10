@@ -1,6 +1,11 @@
 // CONFIGURAÇÃO
 const WHATSAPP_NUMBER = "5512991136258";
 
+// ── Promoção Dia dos Pais — Agosto 2026 ────────────────────────────────────
+const DIA_DOS_PAIS_DESCONTO = true;   // Mude para false para desativar
+const DESCONTO_PERCENT = 10;          // 10% de desconto
+// ───────────────────────────────────────────────────────────────────────────
+
 let cart = { items: {}, drinks: {} };
 let currentStep = 1;
 let orderType = 'Entrega';
@@ -192,10 +197,15 @@ function updateUI() {
     if (card) card.querySelector('.qty-val').innerText = data.qty;
   });
 
+  // Aplica desconto Dia dos Pais
+  if (DIA_DOS_PAIS_DESCONTO) {
+    total = total * (1 - DESCONTO_PERCENT / 100);
+  }
+
   const bar = document.getElementById('order-bar');
   if (count > 0) {
     bar.classList.remove('hidden');
-    document.getElementById('bar-total').innerHTML = `<small>R$</small> ${total.toFixed(2).replace('.', ',')}`;
+    document.getElementById('bar-total').innerHTML = `<small>R$</small> ${total.toFixed(2).replace('.', ',')}${DIA_DOS_PAIS_DESCONTO ? ' <span style="font-size:0.7rem;color:#f0d060;font-family:Jost,sans-serif">(-${DESCONTO_PERCENT}% 🎁)</span>' : ''}`;
     document.getElementById('bar-items').innerText = `${count} ${count === 1 ? 'item selecionado' : 'itens selecionados'}`;
     document.getElementById('cart-count').innerText = count;
   } else {
@@ -307,6 +317,24 @@ function renderCartList() {
   // 2. Substitui todo o conteúdo de uma vez — API moderna, um único ciclo do motor
   // Muito mais performático que innerHTML = '' seguido de N appendChild()
   list.replaceChildren(fragment);
+
+  // Aplica desconto Dia dos Pais
+  if (DIA_DOS_PAIS_DESCONTO) {
+    const subtotalEl = document.getElementById('modal-subtotal-row');
+    if (!subtotalEl) {
+      // Insere linha de subtotal + desconto acima do total
+      const totalRow = document.getElementById('modal-total-val').closest('.modal-total') ||
+                       document.getElementById('modal-total-val').parentElement;
+      const discountInfo = document.createElement('div');
+      discountInfo.id = 'modal-subtotal-row';
+      discountInfo.style.cssText = 'font-size:0.85rem;color:#888;margin-bottom:4px;font-family:Jost,sans-serif;';
+      discountInfo.innerHTML = `Subtotal: R$ ${total.toFixed(2).replace('.', ',')} &nbsp;|&nbsp; <span style="color:#27ae60;font-weight:700">🎁 -${DESCONTO_PERCENT}% Dia dos Pais</span>`;
+      totalRow.insertBefore(discountInfo, document.getElementById('modal-total-val'));
+    } else {
+      subtotalEl.innerHTML = `Subtotal: R$ ${total.toFixed(2).replace('.', ',')} &nbsp;|&nbsp; <span style="color:#27ae60;font-weight:700">🎁 -${DESCONTO_PERCENT}% Dia dos Pais</span>`;
+    }
+    total = total * (1 - DESCONTO_PERCENT / 100);
+  }
 
   document.getElementById('modal-total-val').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
@@ -460,6 +488,15 @@ function finishOrder() {
     total += data.price * data.qty;
   });
 
+  // Aplica desconto Dia dos Pais
+  const subtotalOriginal = total;
+  let discountLine = '';
+  if (DIA_DOS_PAIS_DESCONTO) {
+    const desconto = subtotalOriginal * (DESCONTO_PERCENT / 100);
+    total = subtotalOriginal - desconto;
+    discountLine = `🎁 *DESCONTO DIA DOS PAIS (${DESCONTO_PERCENT}%): -R$ ${desconto.toFixed(2).replace('.', ',')}*`;
+  }
+
   // 1. Monta o Array de Strings com emojis e estrutura bem definida para facilitar leitura
   let msgLines = [
     '🔔 *NOVO PEDIDO - BARBOSA RESTAURANTE* 🔔',
@@ -490,6 +527,10 @@ function finishOrder() {
   }
 
   msgLines.push('');
+  if (DIA_DOS_PAIS_DESCONTO) {
+    msgLines.push(`💰 Subtotal: R$ ${subtotalOriginal.toFixed(2).replace('.', ',')}`);
+    msgLines.push(discountLine);
+  }
   msgLines.push(`💰 *${orderType === 'Entrega' ? 'SUBTOTAL' : 'TOTAL'}: R$ ${total.toFixed(2).replace('.', ',')}*`);
 
   if (orderType === 'Entrega') {
@@ -509,6 +550,7 @@ function finishOrder() {
     channel: 'Site',
     detail: itemsList.trim() + (obs ? `\n\nObs: ${obs}` : ''),
     total: total,
+    discount: DIA_DOS_PAIS_DESCONTO ? `${DESCONTO_PERCENT}% Dia dos Pais` : null,
     feePending: orderType === 'Entrega'
   };
 
