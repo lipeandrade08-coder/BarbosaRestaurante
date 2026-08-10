@@ -504,12 +504,31 @@ function finishOrder() {
   // 2. Transforma o Array numa string unida por quebras de linha limpas
   const finalMsg = msgLines.join('\n');
 
-  showToast('✅ Pedido enviado! Abrindo WhatsApp...');
+  const payload = {
+    customer: name,
+    channel: 'Site',
+    detail: itemsList.trim() + (obs ? `\n\nObs: ${obs}` : ''),
+    total: total,
+    feePending: orderType === 'Entrega'
+  };
 
-  // 3. encodeURIComponent agora lida com uma string perfeitamente estruturada
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(finalMsg)}`, '_blank', 'noopener,noreferrer');
-  // 4. Limpa o carrinho silenciosamente e fecha o modal
-  resetCartSilent();
+  fetch('http://localhost:3000/api/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(res => {
+    if (res.ok) {
+      showToast('✅ Pedido enviado com sucesso para o restaurante!');
+      resetCartSilent();
+    } else {
+      throw new Error('Falha na API');
+    }
+  }).catch(err => {
+    console.error('Erro na API, enviando pro WhatsApp...', err);
+    showToast('⚠️ Redirecionando para WhatsApp...');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(finalMsg)}`, '_blank', 'noopener,noreferrer');
+    resetCartSilent();
+  });
 }
 
 function showToast(msg) {
