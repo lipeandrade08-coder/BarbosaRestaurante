@@ -1098,22 +1098,62 @@
       <div id="tab-pratos-do-dia" class="tab-content">
 
         <div class="menu-card reveal">
+          <div class="card-img" style="background-image: url('img/strogonoff_picanha.png')"></div>
+          <div class="card-body">
+            <h3 class="card-name">Strogonoff de Carne</h3>
+            <p class="card-desc">Arroz, feijão, macarrão, farofa, batata palha e delicioso strogonoff de carne.</p>
+            <div class="card-prices">
+              <div class="price-pill" data-item="Strogonoff de Carne" data-size="P" data-price="25"
+                onclick="handlePillClick(this)">
+                <span>Pequena</span><strong>R$ 25</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+              <div class="price-pill" data-item="Strogonoff de Carne" data-size="M" data-price="30"
+                onclick="handlePillClick(this)">
+                <span>Média</span><strong>R$ 30</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+              <div class="price-pill" data-item="Strogonoff de Carne" data-size="G" data-price="35"
+                onclick="handlePillClick(this)">
+                <span>Grande</span><strong>R$ 35</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal sold-out">
           <div class="card-img" style="background-image: url('img/feijoada.png')"></div>
           <div class="card-body">
             <h3 class="card-name">Feijoada</h3>
             <p class="card-desc">Arroz, couve refogada, farofa temperada e torresmo crocante.</p>
             <div class="card-prices">
-              <div class="price-pill" data-item="Feijoada" data-size="P" data-price="25" onclick="handlePillClick(this)">
+              <div class="price-pill" data-item="Feijoada" data-size="P" data-price="25"
+                onclick="handlePillClick(this)">
                 <span>Pequena</span><strong>R$ 25</strong>
-                <div class="pill-qty"><button class="pill-qty-btn" onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
               </div>
-              <div class="price-pill" data-item="Feijoada" data-size="M" data-price="30" onclick="handlePillClick(this)">
+              <div class="price-pill" data-item="Feijoada" data-size="M" data-price="30"
+                onclick="handlePillClick(this)">
                 <span>Média</span><strong>R$ 30</strong>
-                <div class="pill-qty"><button class="pill-qty-btn" onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
               </div>
-              <div class="price-pill" data-item="Feijoada" data-size="G" data-price="35" onclick="handlePillClick(this)">
+              <div class="price-pill" data-item="Feijoada" data-size="G" data-price="35"
+                onclick="handlePillClick(this)">
                 <span>Grande</span><strong>R$ 35</strong>
-                <div class="pill-qty"><button class="pill-qty-btn" onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
               </div>
             </div>
           </div>
@@ -1181,6 +1221,37 @@
         <div class="menu-card reveal">
           <div class="card-img" style="background-image: url('img/bife_com_fritas.png')"></div>
           <div class="card-body">
+            <h3 class="card-name">Bife Contra Filé</h3>
+            <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e suculento contra filé grelhado.</p>
+            <div class="card-prices">
+              <div class="price-pill" data-item="Bife Contra Filé" data-size="P" data-price="25"
+                onclick="handlePillClick(this)">
+                <span>Pequena</span><strong>R$ 25</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+              <div class="price-pill" data-item="Bife Contra Filé" data-size="M" data-price="30"
+                onclick="handlePillClick(this)">
+                <span>Média</span><strong>R$ 30</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+              <div class="price-pill" data-item="Bife Contra Filé" data-size="G" data-price="35"
+                onclick="handlePillClick(this)">
+                <span>Grande</span><strong>R$ 35</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal">
+          <div class="card-img" style="background-image: url('img/bife_com_fritas.png')"></div>
+          <div class="card-body">
             <h3 class="card-name">Bife com Fritas</h3>
             <p class="card-desc">Arroz, feijão, macarrão, farofa, fritas, maionese e suculento bife grelhado.</p>
             <div class="card-prices">
@@ -1238,7 +1309,7 @@
             </div>
           </div>
         </div>
-        <div class="menu-card reveal">
+        <div class="menu-card reveal sold-out">
           <div class="card-img" style="background-image: url('img/marmitex_tradicional.webp')"></div>
           <div class="card-body">
             <h3 class="card-name">Panceta</h3>
