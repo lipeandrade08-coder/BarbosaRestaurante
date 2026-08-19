@@ -4,15 +4,13 @@ with open('/Users/mac/Documents/Barbosa Restaurante/index.html', 'r', encoding='
     html = f.read()
 
 allowed_items = [
-    'Strogonoff',
+    'Churrasco',
+    'Feijoada',
     'Parmegiana',
     'Filé de Peixe',
-    'Frango à Milanesa',
     'Filé à Milanesa',
-    'Contra Filé',
-    'Bife com Fritas',
-    'Marmita de Churrasco',
-    'Kit Churrasco'
+    'Frango à Milanesa',
+    'Bife com Fritas'
 ]
 
 # We need to find all menu-card divs.
