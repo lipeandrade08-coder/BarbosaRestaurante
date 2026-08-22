@@ -3,14 +3,13 @@ import re
 with open('/Users/mac/Documents/Barbosa Restaurante/index.html', 'r', encoding='utf-8') as f:
     html = f.read()
 
-allowed_items = [
-    'Churrasco',
-    'Feijoada',
-    'Parmegiana',
-    'Filé de Peixe',
+available_items = [
+    'Parmegiana de Frango',
+    'Parmegiana de Carne',
+    'Bife com Fritas',
     'Filé à Milanesa',
-    'Frango à Milanesa',
-    'Bife com Fritas'
+    'Panceta',
+    'Churrasco'
 ]
 
 # We need to find all menu-card divs.
@@ -25,15 +24,15 @@ def replace_card(match):
     card_start = match.group(1)
     card_name = match.group(2)
     
-    # Check if card_name is in allowed items
-    is_allowed = any(allowed.lower() in card_name.lower() for allowed in allowed_items)
+    # Check if card_name is in available items
+    is_available = any(available.lower() in card_name.lower() for available in available_items)
     
     # Add or remove sold-out
     if 'sold-out' in card_start:
-        if is_allowed:
+        if is_available:
             card_start = card_start.replace(' sold-out', '')
     else:
-        if not is_allowed:
+        if not is_available:
             card_start = card_start.replace('menu-card reveal', 'menu-card reveal sold-out')
             
     return f"{card_start}{card_name}</h3>"
