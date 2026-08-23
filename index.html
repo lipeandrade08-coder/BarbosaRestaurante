@@ -186,6 +186,12 @@
     "hasMenuItem": [
       {
         "@type": "MenuItem",
+        "name": "Frango Assado",
+        "description": "Frango assado acompanhado de linguiça, batata, salpicão e farofa.",
+        "offers": { "@type": "Offer", "price": "60.00", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" }
+      },
+      {
+        "@type": "MenuItem",
         "name": "Feijoada Completa da Casa",
         "description": "Arroz, couve refogada, farofa temperada e torresmo crocante. Disponível nos tamanhos P, M e G.",
         "offers": { "@type": "Offer", "price": "25.00", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" }
@@ -1333,6 +1339,22 @@
               <div class="price-pill" data-item="Marmita de Churrasco" data-size="G" data-price="35"
                 onclick="handlePillClick(this)">
                 <span>Grande</span><strong>R$ 35</strong>
+                <div class="pill-qty"><button class="pill-qty-btn"
+                    onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
+                    class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal">
+          <div class="card-img" style="background-image: url('img/frango_assado.png'); background-size: cover; background-position: center 70%;"></div>
+          <div class="card-body">
+            <h3 class="card-name">Frango Assado</h3>
+            <p class="card-desc">Frango assado acompanhado de linguiça, batata, salpicão e farofa.</p>
+            <div class="card-prices">
+              <div class="price-pill" data-item="Frango Assado" data-size="Inteiro" data-price="60"
+                onclick="handlePillClick(this)">
+                <span>Inteiro</span><strong>R$ 60</strong>
                 <div class="pill-qty"><button class="pill-qty-btn"
                     onclick="pillQtyChange(this,-1,event)">−</button><span class="pill-qty-val">0</span><button
                     class="pill-qty-btn" onclick="pillQtyChange(this,1,event)">+</button></div>
