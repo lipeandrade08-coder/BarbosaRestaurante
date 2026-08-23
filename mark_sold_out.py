@@ -9,7 +9,8 @@ available_items = [
     'Bife com Fritas',
     'Filé à Milanesa',
     'Panceta',
-    'Churrasco'
+    'Churrasco',
+    'Peixe'
 ]
 
 # We need to find all menu-card divs.
