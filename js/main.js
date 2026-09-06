@@ -2,7 +2,7 @@
 const WHATSAPP_NUMBER = "5512991136258";
 
 // ── Promoção Dia dos Pais — Agosto 2026 ────────────────────────────────────
-const DIA_DOS_PAIS_DESCONTO = true;   // Mude para false para desativar
+const DIA_DOS_PAIS_DESCONTO = false;   // Mude para false para desativar
 const DESCONTO_PERCENT = 10;          // 10% de desconto
 // ───────────────────────────────────────────────────────────────────────────
 
